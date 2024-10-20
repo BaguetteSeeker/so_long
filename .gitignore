@@ -1,0 +1,14 @@
+.obj/
+main.c
+*.a
+*.o
+*.swo
+*.swp
+*.swn
+*.gch
+*.out
+*.json
+*.vscode
+*.txt
+maps/
+assets/

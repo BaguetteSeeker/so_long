@@ -1,0 +1,8 @@
+[submodule "minilibx"]
+	path = minilibx
+	url = https://github.com/42Paris/minilibx-linux.git
+	branch = master
+[submodule "libft"]
+	path = libft
+	url = https://github.com/BaguetteSeeker/libft.git
+	branch = main
