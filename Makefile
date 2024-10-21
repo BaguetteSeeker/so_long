@@ -6,11 +6,13 @@
 #    By: epinaud <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/25 16:30:14 by epinaud           #+#    #+#              #
-#    Updated: 2024/10/21 16:34:31 by epinaud          ###   ########.fr        #
+#    Updated: 2024/10/22 00:54:44 by epinaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXE = so_long
+
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -ggdb3
 
@@ -22,7 +24,7 @@ OBJ_DIR = .obj
 
 MLX_DIR = minilibx
 
-CC = cc -D_XOPEN_SOURCE=700
+OS_NAME := $(shell uname -s | tr A-Z a-z)
 
 $(OBJ_DIR)/%.o : %.c
 	$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
@@ -32,7 +34,10 @@ all: libft $(OBJ_DIR) $(EXE)
 $(EXE) :
 	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
 
-so_long: .obj/so_long.o
+os:
+	@echo $(OS_NAME)
+
+so_long: .obj/so_long.o .obj/map.o
 
 libft:
 	@git -C libft pull

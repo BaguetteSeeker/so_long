@@ -6,13 +6,11 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 06:06:02 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/21 17:00:10 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/22 00:50:13 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 500
 
 void	img_pix_put(t_img *img, int x, int y, int color)
 {
@@ -64,7 +62,7 @@ void	render_background(t_img *img, int color)
     }
 }
 
-int	render_game(t_data *solong)
+int	render_game(t_game *solong)
 {
 	if (solong->win == NULL)
         return (1);
@@ -77,7 +75,7 @@ int	render_game(t_data *solong)
     return (0);
 }
 
-int on_destroy(t_data *solong)
+int on_destroy(t_game *solong)
 {
 	mlx_destroy_window(solong->mlx, solong->win);
 	mlx_destroy_display(solong->mlx);
@@ -86,7 +84,7 @@ int on_destroy(t_data *solong)
 	return (0);
 }
 
-int	on_keypress(int key_symbol, t_data *solong)
+int	on_keypress(int key_symbol, t_game *solong)
 {
 	if(key_symbol == XK_Escape)
 		return (on_destroy(solong));
@@ -98,36 +96,52 @@ int	on_keypress(int key_symbol, t_data *solong)
 	return (0);
 }
 
-// int	check_map(char *map)
-// {
-	
-// }
+static void	setup_hooks(t_game *solong)
+{
+	ft_putendl_fd("Setting up hooks\n", 1);
+	mlx_loop_hook(solong->mlx, &render_game, solong);
+	mlx_hook(solong->win, KeyRelease, KeyReleaseMask, &on_keypress, solong);
+	mlx_hook(solong->win, DestroyNotify, StructureNotifyMask, &on_destroy, solong);
+	mlx_loop(solong->mlx);
+}
 
 //int	player_move
-
-int	main()
+int	put_err(char *msg, t_game *solong)
 {
-	t_data	solong;
+	ft_putendl_fd(msg, 1);
+	if (solong)
+		on_destroy(solong);
+	exit(1);
+}
 
-	// if (argc == 1)
-	// 	ft_printf(&solong, "Missing map (./so_long maps/intra.ber)");
-	// if (argc > 2)
-	// 	ft_printf(&solong, "Too many arguments");
+//void  flood_fill(char **tab, t_point size, t_point begin);
+
+//void *mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width, int *height);
+
+int	main(int argc, char *argv[])
+{
+	t_game	solong;
+
+	if (argc < 2)
+	    exit(put_err("Missing map (./so_long maps/intra.ber)", &solong));
+	if (argc > 2)
+	    exit(put_err("Too many arguments", &solong));
+	if (parse_map(argv[1]))
+		return (1);
+		
 	solong.mlx = mlx_init();
 	if (!solong.mlx)
 		return (1);
+	//parse map
+	//draw map
+	//enable actions
+	//mlx_xpm_file_to_image(void *mlx, char *filename, int *width, int *height);
 	solong.win = mlx_new_window(solong.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Oui.");
 	if (!solong.win)
 		return (free(solong.mlx), 1);
 
 	solong.img.mlx_img = mlx_new_image(solong.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	solong.img.addr = mlx_get_data_addr(solong.img.mlx_img, &solong.img.bpp, &solong.img.line_len, &solong.img.endian);
-			
-	ft_printf("Solong started\n");
-	mlx_loop_hook(solong.mlx, &render_game, &solong);
-	mlx_hook(solong.win, KeyRelease, KeyReleaseMask, &on_keypress, &solong);
-	mlx_hook(solong.win, DestroyNotify, StructureNotifyMask, &on_destroy, &solong);
-
-	mlx_loop(solong.mlx);
+	setup_hooks(&solong);
 	on_destroy(&solong);
 }
