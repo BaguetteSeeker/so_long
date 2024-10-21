@@ -10,5 +10,6 @@ main.c
 *.json
 *.vscode
 *.txt
+*.md
+*exe
 maps/
-assets/

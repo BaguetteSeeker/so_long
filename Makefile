@@ -6,17 +6,17 @@
 #    By: epinaud <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/25 16:30:14 by epinaud           #+#    #+#              #
-#    Updated: 2024/10/20 18:45:46 by epinaud          ###   ########.fr        #
+#    Updated: 2024/10/21 16:34:31 by epinaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXE = so_long
 
-INCLUDES = -I. -Ilibft -Ilibft/printf -I/usr/include -Iminilibx/
+CFLAGS = -Wall -Wextra -Werror -ggdb3
+
+INCLUDES = -I. -Ilibft -Ilibft/printf -I/usr/include -Iminilibx
 
 LDLIBS = libft/libft.a -Lminilibx -lmlx -L/usr/lib/X11 -lmlx_Linux -lXext -lX11
-
-CFLAGS = -Wall -Wextra -Werror -ggdb3
 
 OBJ_DIR = .obj
 
