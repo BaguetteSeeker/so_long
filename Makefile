@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epinaud <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: epinaud <epinaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/25 16:30:14 by epinaud           #+#    #+#              #
-#    Updated: 2024/10/22 00:54:44 by epinaud          ###   ########.fr        #
+#    Updated: 2024/10/22 16:37:00 by epinaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror -ggdb3
 
 INCLUDES = -I. -Ilibft -Ilibft/printf -I/usr/include -Iminilibx
 
-LDLIBS = libft/libft.a -Lminilibx -lmlx -L/usr/lib/X11 -lmlx_Linux -lXext -lX11
+LDLIBS = libft/libft.a -Lminilibx -lmlx -lmlx_Linux -L/usr/lib/X11 -lXext -lX11
 
 OBJ_DIR = .obj
 
@@ -29,7 +29,7 @@ OS_NAME := $(shell uname -s | tr A-Z a-z)
 $(OBJ_DIR)/%.o : %.c
 	$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
-all: libft $(OBJ_DIR) $(EXE)
+all: libft $(OBJ_DIR) $(EXE) os
 
 $(EXE) :
 	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
@@ -37,7 +37,7 @@ $(EXE) :
 os:
 	@echo $(OS_NAME)
 
-so_long: .obj/so_long.o .obj/map.o
+so_long: .obj/so_long.o .obj/map.o .obj/draw.o .obj/set_hooks.o
 
 libft:
 	@git -C libft pull

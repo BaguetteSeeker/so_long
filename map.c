@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: epinaud <epinaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:59:00 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/22 01:05:20 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/22 18:48:51 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,27 @@ static t_map	*init_map(t_map *map)
 
 static int	check_map(t_map *map)
 {
+	map->exit.x = 0;
 	//parsemap
 	//check_errors
 	//flood_fill
 	return (0);
 }
 
-static void	assign_elm(char c, t_map *map)
+static void	assign_elm(char c, size_t xpos, size_t ypos, t_map *map)
 {
 	map->size++;
-	if (c = 'C')
+
+	if (c == 'P')
+	{
+		map->count.player++;
+		map->player.x = xpos;
+		map->player.y = ypos;
+	}
+	else if (c == 'C')
 		map->count.collectibles++;
 	else if (c == 'E')
 		map->count.adverse++;
-	else if (c == 'P')
-		map->count.player++;
 	return ;
 }
 
@@ -64,7 +70,7 @@ int	parse_map(char *path)
 			if (!ft_strchr("01CEP", *row))
 				put_err("Invalid tile / element", NULL);
 			else
-				assign_elm(*row, &map);
+				assign_elm(*row, tmp_rowsiz, map.col_size, &map);
 			row++;
 		}
 		if (map.row_size > 0 && (tmp_rowsiz != map.row_size))

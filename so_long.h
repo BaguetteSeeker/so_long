@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: epinaud <epinaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/22 01:04:19 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/22 17:16:46 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,19 @@ typedef struct	s_collectible
 	t_point	pos;
 }	t_collectible;
 
+typedef struct s_err
+{
+	
+} t_err ;
+
+
 typedef struct	s_map
 {
 	t_counter		count;
-	t_point		player;
+	t_point			player;
+	t_point			exit;
 	t_adverse		adverse[1];
 	t_collectible	collectible[2];
-	t_point			exit;
 	size_t			row_size;
 	size_t			col_size;
 	size_t			size;
@@ -97,6 +103,9 @@ typedef struct s_game
 	t_map	map;
 }			t_game;
 
-int	parse_map(char *path);
-int	put_err(char *msg, t_game solong);
+int		parse_map(char *path);
+int		put_err(char *msg, t_game *solong);
+int		render_loop(t_game *solong);
+void	setup_hooks(t_game *solong);
+int		on_destroy(t_game *solong);
 #endif
