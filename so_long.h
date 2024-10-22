@@ -14,6 +14,7 @@
 # define SO_LONG_H
 # include "libft.h"
 # include "mlx.h"
+# include <fcntl.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 
@@ -60,7 +61,7 @@ typedef struct  s_point
 typedef struct	s_counter
 {
 	size_t	player;
-	size_t	averse;
+	size_t	adverse;
 	size_t	collectibles;
 	size_t	exit;
 }	t_counter;

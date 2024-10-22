@@ -16,7 +16,7 @@ static t_map	*init_map(t_map *map)
 {
 	map->row_size = 0;
 	map->col_size = 0;
-	//map->size = 0;
+	map->size = 0;
 	return (map);
 }
 
@@ -30,7 +30,13 @@ static int	check_map(t_map *map)
 
 static void	assign_elm(char c, t_map *map)
 {
-	
+	map->size++;
+	if (c = 'C')
+		map->count.collectibles++;
+	else if (c == 'E')
+		map->count.adverse++;
+	else if (c == 'P')
+		map->count.player++;
 	return ;
 }
 
