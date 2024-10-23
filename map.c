@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epinaud <epinaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:59:00 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/22 18:48:51 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/23 15:28:48 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,32 @@ static int	check_map(t_map *map)
 	return (0);
 }
 
-static void	assign_elm(char c, size_t xpos, size_t ypos, t_map *map)
+static void	parse_elm(char c, size_t xpos, size_t ypos, t_map *map)
 {
 	map->size++;
-
 	if (c == 'P')
 	{
-		map->count.player++;
 		map->player.x = xpos;
 		map->player.y = ypos;
+		map->count.player++;
 	}
 	else if (c == 'C')
+	{
+		map->collectible[map->count.collectibles].pos.x = xpos;
+		map->collectible[map->count.collectibles].pos.y = ypos;
 		map->count.collectibles++;
+	}
 	else if (c == 'E')
+	{
+		map->exit.x = xpos;
+		map->exit.y = ypos;
+		map->count.exit++;
+	}
+	else if (c == 'A')
+	{	map->adverse[map->count.adverse].pos.x = xpos;
+		map->adverse[map->count.adverse].pos.y = ypos;
 		map->count.adverse++;
+	}
 	return ;
 }
 
@@ -70,7 +82,7 @@ int	parse_map(char *path)
 			if (!ft_strchr("01CEP", *row))
 				put_err("Invalid tile / element", NULL);
 			else
-				assign_elm(*row, tmp_rowsiz, map.col_size, &map);
+				parse_elm(*row, tmp_rowsiz, map.col_size, &map);
 			row++;
 		}
 		if (map.row_size > 0 && (tmp_rowsiz != map.row_size))
