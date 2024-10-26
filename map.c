@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:59:00 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/26 04:09:52 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/26 14:06:07 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	parse_map(char *path, t_game *solong)
 		row = get_next_line(fd);
 		if (!row)
 		{
-			*(map.grid) = '\0';
+			map.grid[map.col_size] = NULL;
 			close(fd);
 			return (check_map(&map));
 		}

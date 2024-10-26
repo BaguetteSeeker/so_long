@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/26 02:45:37 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/26 14:45:08 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ typedef struct	s_map
 	t_counter		count;
 	t_point			player;
 	t_point			exit;
-	t_adverse		*adverse;
-	t_collectible	*collectible;
+	t_point		*adverse;
+	t_point	*collectible;
 	size_t			row_size;
 	size_t			col_size;
 	size_t			size;
