@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epinaud <epinaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/22 17:16:46 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/26 02:45:37 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 # include "libft.h"
 # include "mlx.h"
 # include <fcntl.h>
+# include <stdio.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 
+# define EXIT_SUCCESS 0
+# define EXIT_FAILLURE -1
+# define MLX_OFF 0
+# define MLX_ON 1
 # define TILE 0
 # define WALL 1
 # define CHAR_BACK 2
@@ -81,14 +86,14 @@ typedef struct s_err
 	
 } t_err ;
 
-
 typedef struct	s_map
 {
+	char			**grid;
 	t_counter		count;
 	t_point			player;
 	t_point			exit;
-	t_adverse		adverse[1];
-	t_collectible	collectible[2];
+	t_adverse		*adverse;
+	t_collectible	*collectible;
 	size_t			row_size;
 	size_t			col_size;
 	size_t			size;
@@ -98,13 +103,13 @@ typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
-	void	*sprites[9];
+	void	**sprites;
 	t_img	img;
 	t_map	map;
 }			t_game;
 
-int		parse_map(char *path);
-int		put_err(char *msg, t_game *solong);
+int		parse_map(char *path, t_game *solong);
+int		put_err(char *msg, t_game *solong, int mlx_initialized);
 int		render_loop(t_game *solong);
 void	setup_hooks(t_game *solong);
 int		on_destroy(t_game *solong);

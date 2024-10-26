@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:59:00 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/23 15:28:48 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/26 04:09:52 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static t_map	*init_map(t_map *map)
 {
+	map->grid = NULL;
 	map->row_size = 0;
 	map->col_size = 0;
 	map->size = 0;
@@ -58,40 +59,65 @@ static void	parse_elm(char c, size_t xpos, size_t ypos, t_map *map)
 	return ;
 }
 
-int	parse_map(char *path)
+static void	parse_row(char *row, t_game *solong)
+{
+	size_t	curr_rwsiz;
+
+	curr_rwsiz = 0;
+	while (*row && *row != '\n')
+	{
+		curr_rwsiz++;
+		if (!ft_strchr("01CEP", *row))
+			put_err("Invalid tile / element", solong, MLX_OFF);
+		else
+			parse_elm(*row, curr_rwsiz, solong->map.col_size, &(solong->map));
+		row++;
+	}
+	if (solong->map.row_size > 0 && (curr_rwsiz != solong->map.row_size))
+		put_err("Invalid map dimensions", solong, MLX_OFF);
+	else if (solong->map.row_size == 0)
+		solong->map.row_size = curr_rwsiz;
+	free(row - curr_rwsiz);
+}
+
+int	parse_map(char *path, t_game *solong)
 {
 	t_map	map;
-	size_t	tmp_rowsiz;
 	int		fd;
 	char	*row;
+	// size_t	i;
+	// size_t	j;
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		return (put_err("Error opening file", NULL));
+		return (put_err("Error opening file", solong, MLX_OFF));
 	init_map(&map);
+	solong->map = map;
 	while (1)
 	{
 		row = get_next_line(fd);
 		if (!row)
-			break ;
-		map.col_size++;
-		tmp_rowsiz = 0;
-		while (*row && *row != '\n')
 		{
-			tmp_rowsiz++;
-			if (!ft_strchr("01CEP", *row))
-				put_err("Invalid tile / element", NULL);
-			else
-				parse_elm(*row, tmp_rowsiz, map.col_size, &map);
-			row++;
+			*(map.grid) = '\0';
+			close(fd);
+			return (check_map(&map));
 		}
-		if (map.row_size > 0 && (tmp_rowsiz != map.row_size))
-			put_err("Invalid map dimensions", NULL);
-		else if (map.row_size == 0)
-			map.row_size = tmp_rowsiz;
-		free(row - tmp_rowsiz);
+		else
+		{
+			map.grid = ft_realloc(map.grid, sizeof(char *) * (map.col_size + 1));
+			//map.grid[map.col_size] = '\0';
+			map.grid[map.col_size] = row;
+			ft_printf("%s \n", map.grid[map.col_size]);
+			parse_row(map.grid[map.col_size], solong);
+			map.col_size++;
+			//map.grid++;
+			// while (map.grid)
+			// {
+			// 	gridcount++;
+			// 	map.grid++;
+			// }
+			//ft_printf("Grid has %d rows\n", gridcount);
+			//free(row);
+		}
 	}
-	//check empty map
-	close(fd);
-	return (check_map(&map));
 }
