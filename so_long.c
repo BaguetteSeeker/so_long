@@ -6,31 +6,34 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 06:06:02 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/26 02:44:26 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/28 04:23:43 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 //int	player_move
-int	put_err(char *msg, t_game *solong, int mlx_initialized)
+int	put_err(char *msg, t_game *solong, int mlx_instance)
 {
 	perror(msg);
-	if (mlx_initialized)
+	if (mlx_instance == MLX_ON)
 		on_destroy(solong);
 	exit(EXIT_FAILLURE);
 }
 
+//void *mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width, int *height);
 //void  flood_fill(char **tab, t_point size, t_point begin);
 
-//void *mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width, int *height);
-
+//Map parsing
+//Rendering
+//Events Management
+//Error Handling
 int	main(int argc, char *argv[])
 {
 	t_game	solong;
 
 	if (argc < 2)
-	   	put_err("Missing map (./so_long/maps/<map>.ber)", &solong, MLX_OFF);
+	   	put_err("Missing map (./maps/<map>.ber)", &solong, MLX_OFF);
 	if (argc > 2)
 	    put_err("Too many arguments", &solong, MLX_OFF);
 	if (parse_map(argv[1], &solong))

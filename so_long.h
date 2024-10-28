@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/26 14:45:08 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/28 04:05:13 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_rect
 
 typedef struct  s_point
 {
-	int	x;
-	int	y;
+	size_t	x;
+	size_t	y;
 }	t_point;
 
 typedef struct	s_counter
@@ -73,18 +73,14 @@ typedef struct	s_counter
 
 typedef struct	s_adverse
 {
-	t_point	pos;
+	t_point	*pos;
+	void	*img;
 }	t_adverse;
 
 typedef struct	s_collectible
 {
-	t_point	pos;
+	t_point	*pos;
 }	t_collectible;
-
-typedef struct s_err
-{
-	
-} t_err ;
 
 typedef struct	s_map
 {
@@ -92,8 +88,8 @@ typedef struct	s_map
 	t_counter		count;
 	t_point			player;
 	t_point			exit;
-	t_point		*adverse;
-	t_point	*collectible;
+	t_adverse		*adverse;
+	t_collectible	*collectible;
 	size_t			row_size;
 	size_t			col_size;
 	size_t			size;
@@ -109,7 +105,7 @@ typedef struct s_game
 }			t_game;
 
 int		parse_map(char *path, t_game *solong);
-int		put_err(char *msg, t_game *solong, int mlx_initialized);
+int		put_err(char *msg, t_game *solong, int mlx_instance);
 int		render_loop(t_game *solong);
 void	setup_hooks(t_game *solong);
 int		on_destroy(t_game *solong);
