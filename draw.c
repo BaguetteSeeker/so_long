@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epinaud <epinaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:37:40 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/22 16:35:52 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/30 00:41:35 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,10 @@ void	render_background(t_img *img, int color)
     }
 }
 
-
 int	render_loop(t_game *solong)
 {
 	if (solong->win == NULL)
         return (1);
-
 	render_background(&solong->img, 0xFFFFFF);
     render_rect(&solong->img, (t_rect){WINDOW_WIDTH - 100, WINDOW_HEIGHT - 100,
             100, 100, GREEN_PIXEL});

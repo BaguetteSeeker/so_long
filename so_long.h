@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/28 04:05:13 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/30 01:46:08 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
+
+# define GAME_NAME "Milk IT!"
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILLURE -1
@@ -33,20 +35,19 @@
 # define EXIT_OPEN 7
 # define EXIT_SHUT 8
 
+# define XPM_GROUND  "ui"
+# define XPM_WALL  "ui"
+# define XPM_EXIT  "ui"
+# define XPM_COLLECTIBLE  "ui"
+# define XPM_PLAYER  "ui"
+# define XPM_ADVERSE "ui"
+
 # define RED_PIXEL 0xFF00FF
 # define GREEN_PIXEL 0xFF00
 
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 500
 
-typedef struct s_img
-{
-	void	*mlx_img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}	t_img;
 
 typedef struct s_rect
 {
@@ -63,36 +64,36 @@ typedef struct  s_point
 	size_t	y;
 }	t_point;
 
-typedef struct	s_counter
+typedef struct	s_entity
 {
-	size_t	player;
-	size_t	adverse;
-	size_t	collectibles;
-	size_t	exit;
-}	t_counter;
+	char			*xpm;
+	void			*img;
+	size_t			count;
+	t_point			pos;
+	struct s_entity	*next;
+}	t_entity;
 
-typedef struct	s_adverse
+typedef struct s_img
 {
-	t_point	*pos;
-	void	*img;
-}	t_adverse;
-
-typedef struct	s_collectible
-{
-	t_point	*pos;
-}	t_collectible;
+	void	*mlx_img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_img;
 
 typedef struct	s_map
 {
 	char			**grid;
-	t_counter		count;
-	t_point			player;
-	t_point			exit;
-	t_adverse		*adverse;
-	t_collectible	*collectible;
 	size_t			row_size;
 	size_t			col_size;
-	size_t			size;
+	size_t			grid_size;
+	t_entity		wall;
+	t_entity		ground;
+	t_entity		collectible;
+	t_entity		exit;
+	t_entity		player;
+	t_entity		adverse;
 }	t_map;
 
 typedef struct s_game
@@ -101,7 +102,7 @@ typedef struct s_game
 	void	*win;
 	void	**sprites;
 	t_img	img;
-	t_map	map;
+	t_map	*map;
 }			t_game;
 
 int		parse_map(char *path, t_game *solong);

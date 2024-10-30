@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 06:06:02 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/28 04:23:43 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/30 13:35:31 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ int	main(int argc, char *argv[])
 	if (argc > 2)
 	    put_err("Too many arguments", &solong, MLX_OFF);
 	if (parse_map(argv[1], &solong))
-		return (1);
+		put_err("Failled to parse map", &solong, MLX_OFF);
 	solong.mlx = mlx_init();
 	if (!solong.mlx)
-		return (1);
+		put_err("Failed to initialize MLX", &solong, MLX_OFF);
 	//parse map
 	//draw map
 	//enable actions
 	//mlx_xpm_file_to_image(void *mlx, char *filename, int *width, int *height);
-	solong.win = mlx_new_window(solong.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Oui.");
+	solong.win = mlx_new_window(solong.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, GAME_NAME);
 	if (!solong.win)
 		return (free(solong.mlx), 1);
-
 	solong.img.mlx_img = mlx_new_image(solong.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	solong.img.addr = mlx_get_data_addr(solong.img.mlx_img, &solong.img.bpp, &solong.img.line_len, &solong.img.endian);
 	setup_hooks(&solong);
 	on_destroy(&solong);
+	exit(0);
 }

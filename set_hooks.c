@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epinaud <epinaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/22 19:52:02 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/30 13:36:06 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,23 @@
 
 int on_destroy(t_game *solong)
 {
-    ft_putendl_fd("Entered destruction state;", 1);
+    ft_putendl_fd("Entered destruction state;\n", 1);
+	//if (solong->map->grid)
+		//ft_clean_memtree(solong->map->grid);
+	//if (solong->win)
+	mlx_clear_window(solong->mlx, solong->win);
 	mlx_destroy_window(solong->mlx, solong->win);
+	mlx_destroy_image(solong->mlx, solong->img.mlx_img);
 	mlx_destroy_display(solong->mlx);
 	free(solong->mlx);
-	exit(0);
+	//exit(1);
+	return (1);
 }
 
 int	on_keypress(int key_symbol, t_game *solong)
 {
 	if(key_symbol == XK_Escape)
-		return (on_destroy(solong));
+		exit(on_destroy(solong));
 	return (0);
 }
 
