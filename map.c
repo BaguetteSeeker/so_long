@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:59:00 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/31 12:32:30 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/31 18:22:16 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,20 @@
 //Parse grid
 //Check Elements
 //Map Integrity - Flood Fill
+
+char	**clean_grid(char **grid)
+{
+	int	row;
+
+	if (!grid)
+		return (NULL);
+	row = 0;
+	while (grid[row])
+		free(grid[row++]);
+	free(grid);
+	return (grid);
+}
+
 char	**create_grid(char *path, t_map *map, t_game *solong)
 {
 	int		fd;
@@ -122,17 +136,22 @@ char	**create_grid(char *path, t_map *map, t_game *solong)
 	{
 		row = get_next_line(fd);
 		if (!row)
-			return (close(fd), map->grid);
+		{
+			close(fd);
+			printf("Grid ptr returned to main is %p && Currow idx is %ld\n", map->grid, map->col_size);
+			return (map->grid);
+		}
 		else
 		{
-			printf("Grid ptr is %p && colsiz is %ld\n", map->grid, map->col_size);
+			printf("Grid ptr is %p && Currow idx is %ld\n", map->grid, map->col_size);
 			map->grid = ft_realloc(map->grid, sizeof(char *) * (map->col_size + 2));
 			if (!map->grid)
 				put_err("Failed to alloc map grid memorry", solong, MLX_OFF);
 			map->grid[map->col_size] = row;
-			ft_printf("%s \n", map->grid[map->col_size]);
+			ft_printf("Curr row address %p\n %s", map->grid[map->col_size], map->grid[map->col_size]);
 			map->col_size++;
 			map->grid[map->col_size] = NULL;
+			ft_printf("Addr %p at index/row %d \n\n", map->grid[map->col_size], map->col_size);
 			//parse_row(map->grid[map->col_size], solong);
 			//ft_printf("Grid has %d rows\n", gridcount);
 		}

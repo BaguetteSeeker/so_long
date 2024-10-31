@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/31 12:31:14 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/31 13:53:13 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,5 @@ int		put_err(char *msg, t_game *solong, int mlx_instance);
 int		render_loop(t_game *solong);
 void	setup_hooks(t_game *solong);
 int		destroy_mlx(t_game *solong);
+char	**clean_grid(char **grid);
 #endif

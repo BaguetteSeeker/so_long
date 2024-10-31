@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 06:06:02 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/31 12:32:05 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/31 12:57:30 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	put_err(char *msg, t_game *solong, int mlx_instance)
 	perror(msg);
 	if (mlx_instance == MLX_ON)
 		destroy_mlx(solong);
-	//ft_clean_memtree(solong->map->grid);
+	ft_clean_memtree(solong->map.grid);
 	exit(EXIT_FAILLURE);
 }
 
