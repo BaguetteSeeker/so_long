@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:59:00 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/30 12:42:11 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/31 12:32:30 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,28 +113,27 @@
 char	**create_grid(char *path, t_map *map, t_game *solong)
 {
 	int		fd;
-	// char	*row;
+	char	*row;
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		put_err("Error opening file", solong, MLX_OFF);
 	while (1)
 	{
-		//row = get_next_line(fd);
-		if (1)
-		{
-			// if (map->col_size)
-			// 	map->grid[map->col_size] = NULL;
+		row = get_next_line(fd);
+		if (!row)
 			return (close(fd), map->grid);
-		}
 		else
 		{
-			printf("%ld\n", map->col_size);
-			//map->grid = ft_realloc(map->grid, sizeof(char *) * (map->col_size + 2));
-			//map->grid[map->col_size] = row;
-			//ft_printf("%s \n", map->grid[map->col_size]);
-			//parse_row(map->grid[map->col_size], solong);
+			printf("Grid ptr is %p && colsiz is %ld\n", map->grid, map->col_size);
+			map->grid = ft_realloc(map->grid, sizeof(char *) * (map->col_size + 2));
+			if (!map->grid)
+				put_err("Failed to alloc map grid memorry", solong, MLX_OFF);
+			map->grid[map->col_size] = row;
+			ft_printf("%s \n", map->grid[map->col_size]);
 			map->col_size++;
+			map->grid[map->col_size] = NULL;
+			//parse_row(map->grid[map->col_size], solong);
 			//ft_printf("Grid has %d rows\n", gridcount);
 		}
 	}
@@ -142,11 +141,9 @@ char	**create_grid(char *path, t_map *map, t_game *solong)
 
 int	parse_map(char *path, t_game *solong)
 {
-	t_map	map;
-
-	map = (t_map){.grid = NULL, .row_size = 0, .col_size = 0};
-	solong->map = &map;
-	create_grid(path, &map, solong);
+	solong->map = (t_map){.grid = NULL, .row_size = 0, .col_size = 0};
+	solong->map.grid = create_grid(path, &solong->map, solong);
+	printf("Map grid is: %p\n", solong->map.grid);
 	//parse_grid
 	return (0);
 }

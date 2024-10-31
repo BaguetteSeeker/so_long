@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/30 01:46:08 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/10/31 12:31:14 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,16 @@ typedef struct	s_map
 
 typedef struct s_game
 {
+	t_img	img;
+	t_map	map;
 	void	*mlx;
 	void	*win;
 	void	**sprites;
-	t_img	img;
-	t_map	*map;
 }			t_game;
 
 int		parse_map(char *path, t_game *solong);
 int		put_err(char *msg, t_game *solong, int mlx_instance);
 int		render_loop(t_game *solong);
 void	setup_hooks(t_game *solong);
-int		on_destroy(t_game *solong);
+int		destroy_mlx(t_game *solong);
 #endif
