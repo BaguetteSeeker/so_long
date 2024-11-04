@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epinaud <epinaud@student.42.fr>            +#+  +:+       +#+         #
+#    By: epinaud <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/25 16:30:14 by epinaud           #+#    #+#              #
-#    Updated: 2024/10/22 16:37:00 by epinaud          ###   ########.fr        #
+#    Updated: 2024/11/04 16:01:33 by epinaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror -ggdb3
 
 INCLUDES = -I. -Ilibft -Ilibft/printf -I/usr/include -Iminilibx
 
-LDLIBS = libft/libft.a -Lminilibx -lmlx -lmlx_Linux -L/usr/lib/X11 -lXext -lX11
+LDLIBS = -Llibft -lft -Lminilibx -lmlx -lmlx_Linux -L/usr/lib/X11 -lXext -lX11
 
 OBJ_DIR = .obj
 

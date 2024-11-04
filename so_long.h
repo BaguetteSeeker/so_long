@@ -6,41 +6,64 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/31 13:53:13 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/04 22:59:56 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-# include "libft.h"
-# include "mlx.h"
+# define _DEFAULT_SOURCE
 # include <fcntl.h>
 # include <stdio.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 
-# define GAME_NAME "Milk IT!"
+typedef struct  s_point
+{
+	size_t	x;
+	size_t	y;
+}	t_point;
+
+typedef struct	s_entity
+{
+	char			xpm[255];
+	void			*img;
+	int				imgwdth;
+	int				imghght;
+	size_t			count;
+	t_point			pos;
+	struct s_entity	*next;
+}	t_entity;
+
+# define LL_TYP t_entity
+# include "libft.h"
+# include "mlx.h"
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILLURE -1
 # define MLX_OFF 0
 # define MLX_ON 1
+
+# define GAME_NAME "Milk IT!"
+# define ENTITIES_TYPE_COUNT 6
+# define ALLOWED_ELEMS "01CEPA"
+
 # define TILE 0
 # define WALL 1
-# define CHAR_BACK 2
+# define CHAR_RIGHT 1
+# define CHAR_LEFT 2
 # define CHAR_FRONT 3
-# define CHAR_RIGHT 4
-# define CHAR_LEFT 5
+# define CHAR_BACK 4
 # define COLLECTIBLE 6
 # define EXIT_OPEN 7
 # define EXIT_SHUT 8
 
-# define XPM_GROUND  "ui"
-# define XPM_WALL  "ui"
-# define XPM_EXIT  "ui"
-# define XPM_COLLECTIBLE  "ui"
-# define XPM_PLAYER  "ui"
-# define XPM_ADVERSE "ui"
+# define XPM_GROUND  "assets/xpm/Grass-0.xpm"
+# define XPM_WALL  "assets/xpm/Bush.xpm"
+# define XPM_EXIT  "assets/xpm/Chest-open.xpm"
+# define XPM_PLAYER  "assets/xpm/Cat-front.xpm"
+# define XPM_COLLECTIBLE  "assets/xpm/Milk-full.xpm"
+# define XPM_ADVERSE "assets/xpm/Cow-0.xpm"
 
 # define RED_PIXEL 0xFF00FF
 # define GREEN_PIXEL 0xFF00
@@ -58,20 +81,6 @@ typedef struct s_rect
 	int	color;
 }	t_rect;
 
-typedef struct  s_point
-{
-	size_t	x;
-	size_t	y;
-}	t_point;
-
-typedef struct	s_entity
-{
-	char			*xpm;
-	void			*img;
-	size_t			count;
-	t_point			pos;
-	struct s_entity	*next;
-}	t_entity;
 
 typedef struct s_img
 {
@@ -88,12 +97,13 @@ typedef struct	s_map
 	size_t			row_size;
 	size_t			col_size;
 	size_t			grid_size;
-	t_entity		wall;
-	t_entity		ground;
-	t_entity		collectible;
-	t_entity		exit;
-	t_entity		player;
-	t_entity		adverse;
+	t_entity		*wall;
+	t_entity		*ground;
+	t_entity		*collectible;
+	t_entity		*exit;
+	t_entity		*player;
+	t_entity		*adverse;
+	t_entity		*entities[ENTITIES_TYPE_COUNT + 1];
 }	t_map;
 
 typedef struct s_game
