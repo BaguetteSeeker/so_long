@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:59:00 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/04 23:13:32 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/06 02:14:48 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 // 	return (0);
 // }
 
-static void	init_map_entities(t_map *map, t_entity *entities[], t_game *solong)
+static void	init_map_entities(t_map *map, t_entity *entities[])
 {	
-	ft_putendl_fd("Loading images ..", 1);
-	map->ground = ft_lstnew((t_entity){.xpm = XPM_GROUND});
-	map->wall = ft_lstnew((t_entity){.xpm = XPM_WALL});
-	map->exit = ft_lstnew((t_entity){.xpm = XPM_EXIT});
-	map->player = ft_lstnew((t_entity){.xpm = XPM_PLAYER});
-	map->collectible = ft_lstnew((t_entity){.xpm = XPM_COLLECTIBLE});
-	map->adverse = ft_lstnew((t_entity){.xpm = XPM_ADVERSE});
+	ft_putendl_fd("Loading entities ..", 1);
+	map->ground = ft_lstnew(&(t_entity){.xpm = XPM_GROUND, .count = 0});
+	map->wall = ft_lstnew(&(t_entity){.xpm = XPM_WALL, .count = 0});
+	map->exit = ft_lstnew(&(t_entity){.xpm = XPM_EXIT, .count = 0});
+	map->player = ft_lstnew(&(t_entity){.xpm = XPM_PLAYER, .count = 0});
+	map->collectible = ft_lstnew(&(t_entity){.xpm = XPM_COLLECTIBLE, .count = 0});
+	map->adverse = ft_lstnew(&(t_entity){.xpm = XPM_ADVERSE, .count = 0});
 	entities[0] = map->ground;
 	entities[1] = map->wall;
 	entities[2] = map->exit;
@@ -36,15 +36,18 @@ static void	init_map_entities(t_map *map, t_entity *entities[], t_game *solong)
 	entities[4] = map->collectible;
 	entities[5] = map->adverse;
 	entities[6] = NULL;
-	while (*entities)
-	{
-		(*entities)->img = mlx_xpm_file_to_image(solong->mlx, (*entities)->xpm, 
-		&((*entities)->imgwdth), &((*entities)->imghght));
-		if (!(*entities)->xpm)
-			put_err("Failled to generate mlx image from XPM file", solong, 1);
-		(entities)++;
-	}
-	*(entities) -= ENTITIES_TYPE_COUNT;
+	ft_strlcpy(map->valid_entities, ALLOWED_ELEMS, ENTITIES_TYPE_COUNT);
+	printf("Test entities, shud display player xpm path : %s\n", entities[3]->xpm);
+	// while (*entities)
+	// {
+	// 	printf("Entity : %s\n", (*entities)->xpm);
+	// 	(*entities)->img = mlx_xpm_file_to_image(solong->mlx, (*entities)->xpm, 
+	// 	&((*entities)->imgwdth), &((*entities)->imghght));
+	// 	if (!((*entities)->xpm))
+	// 		put_err("Failled to generate mlx image from XPM file", solong, MLX_OFF);
+	// 	entities++;
+	// }
+	// entities -= ENTITIES_TYPE_COUNT;
 }
 
 //Parse grid
@@ -55,85 +58,94 @@ char	**create_grid(char *path, t_map *map, t_game *solong)
 {
 	int		fd;
 	char	*row;
+	int		prev_rowsiz;
 
+	prev_rowsiz = -1;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		put_err("Error opening file", solong, MLX_OFF);
+	printf("Creating grid .. File path is %s\n Fd is %d\n", path, fd);
 	while (1)
 	{
 		row = get_next_line(fd);
 		if (!row)
 			return (close(fd), map->grid);
+		map->row_size = ft_strlen(row);
+		if (prev_rowsiz > -1 && (size_t)prev_rowsiz != map->row_size)
+			put_err("Map : Inconsistent rows size", solong, MLX_OFF);
 		else
 		{
-			printf("Grid ptr is %p && Currow idx is %ld\n", map->grid, map->col_size);
 			map->grid = ft_realloc(map->grid, sizeof(char *) * (map->col_size + 2));
 			if (!map->grid)
 				put_err("Failed to realloc map grid", solong, MLX_OFF);
 			map->grid[map->col_size] = row;
-			ft_printf("Curr row address %p\n%s", map->grid[map->col_size], map->grid[map->col_size]);
 			map->grid[++(map->col_size)] = NULL;
-			ft_printf("Addr %p at index/row %d\n\n", map->grid[map->col_size - 1], map->col_size - 1);
+			ft_printf("Curr row address %p\n%s", map->grid[map->col_size - 1], map->grid[map->col_size - 1]);
 		}
+		prev_rowsiz = map->row_size;
 	}
 }
 
-// static void	parse_byte(char c, t_entity *elm_head, t_map *map)
+// void	fill(char **tab, t_point size, t_point cur, char to_fill)
 // {
-// 	t_entity	*elm;
-
-// 	elm = elm_head;
-// 	elm->count++;
-	
-// 	//else if (c == 'C' ||  c == 'A')
-// 	if (!elm->first->img)
-// 	{
-// 		elm->first->img = mlx_xpm_file_to_image(solong->mlx, elm->first->xpm);
-// 		if (!elm->first->img)
-// 			put_err("Failled to generate image from XPM file");
-// 	}
-// 	return ;
+// 	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x 
+// 			|| tab[cur.y][cur.x] != to_fill)
+// 		return;
+// 	tab[cur.y][cur.x] = 'F';
+// 	fill(tab, size, (t_point){cur.x - 1, cur.y}, to_fill);
+// 	fill(tab, size, (t_point){cur.x + 1, cur.y}, to_fill);
+// 	fill(tab, size, (t_point){cur.x, cur.y - 1}, to_fill);
+// 	fill(tab, size, (t_point){cur.x, cur.y + 1}, to_fill);
 // }
 
-// static void	parse_grid(char **grid, t_game *solong)
+// void	flood_fill(char **grid, t_point size, t_point begin)
 // {
-// 	size_t	row;
-// 	size_t	col;
-
-// 	row = 0;
-// 	while (grid[row])
-// 	{
-// 		col = 0;
-// 		while (grid[row][col] && grid[row][col] != '\n')
-// 		{
-// 			if (!ft_strchr(ALLOWED_ELEMS, grid[row][col]))
-// 				put_err("Invalid tile / element", solong, MLX_OFF);
-// 			else if (grid[row][col] == 'P')
-			
-// 			else if (grid[row][col] == 'C' || grid[row][col] == 'A')
-// 				ft_lstadd_back(ft_lstnew());
-// 			else if ()
-// 				elm->pos = (t_point){.x = col, .y = row};
-// 			col++;
-// 		}
-// 		row++;
-// 	}
-
-// 	// 	if (solong->map.row_size > 0 && (curr_rwsiz != solong->map.row_size))
-// // 		put_err("Invalid map dimensions", solong, MLX_OFF);
-// // 	else if (solong->map.row_size == 0)
-// // 		solong->map.row_size = curr_rwsiz;
+// 	fill(grid, size, begin, grid[begin.y][begin.x]);
 // }
 
-int	parse_map(char *path, t_game *solong)
+
+static void	parse_grid(char **grid, t_entity *entities[], t_game *solong)
 {
-	solong->map = (t_map){.grid = NULL, .row_size = 0, .col_size = 0};
-	init_map_entities(&(solong->map), solong->map.entities, solong);
+	size_t	row;
+	size_t	col;
+	t_entity	*elem;
+
+	row = 0;
+	ft_putendl_fd(grid[row], 1);
+	while (grid[row])
+	{
+		col = 0;
+		while (grid[row][col] && grid[row][col] != '\n')
+		{
+			if (!ft_strchr(ALLOWED_ELEMS, grid[row][col]))
+				put_err("Invalid tile / element", solong, MLX_OFF);
+			else
+				elem = entities[(size_t)(ft_strchr(solong->map.valid_entities, grid[row][col]) - solong->map.valid_entities[0])];
+			if (ft_strchr("PE", grid[row][col]))
+				elem->pos = (t_point){.x = col, .y = row};
+			else if (ft_strchr("CA", grid[row][col]))
+				ft_lstadd_back(&elem, ft_lstnew(&(t_entity){.count = elem->count + 1,
+					.next = NULL, .pos = (t_point){.x = col, .y = row}}));
+			elem->count++;
+			col++;
+		}
+		row++;
+	}
+	//solong->map.grid_size = col * row; 
+}
+int	parse_map(char *path, t_game *solong)
+{	
+	solong->map = (t_map){.grid = NULL, .row_size = 0, .col_size = 0, 
+	.ground = 0, .wall = 0, .player = 0, .exit = 0, 
+	.adverse = 0, .collectible = 0};
+	init_map_entities(&(solong->map), solong->map.entities);
 	create_grid(path, &solong->map, solong);
 	printf("Map grid is: %p\n", solong->map.grid);
-
-	//parse_grid
+	parse_grid(solong->map.grid, solong->map.entities, solong);
+	if (solong->map.player->count != 1 || solong->map.exit->count != 1 || solong->map.collectible->count < 1)
+		put_err("Invalid entity count", solong, MLX_OFF);
 	//flood_fill
+	//flood_fill(solong->map.grid, solong->map.grid_size, solong->map.player->pos);
 	//check errors
 	return (0);
 }

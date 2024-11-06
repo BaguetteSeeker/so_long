@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/04 22:59:56 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/06 02:08:06 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,7 @@
 # include <stdio.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
-
-typedef struct  s_point
-{
-	size_t	x;
-	size_t	y;
-}	t_point;
-
-typedef struct	s_entity
-{
-	char			xpm[255];
-	void			*img;
-	int				imgwdth;
-	int				imghght;
-	size_t			count;
-	t_point			pos;
-	struct s_entity	*next;
-}	t_entity;
-
-# define LL_TYP t_entity
+# include "lld_struct.h"
 # include "libft.h"
 # include "mlx.h"
 
@@ -46,7 +28,7 @@ typedef struct	s_entity
 
 # define GAME_NAME "Milk IT!"
 # define ENTITIES_TYPE_COUNT 6
-# define ALLOWED_ELEMS "01CEPA"
+# define ALLOWED_ELEMS "01EPCA"
 
 # define TILE 0
 # define WALL 1
@@ -61,7 +43,7 @@ typedef struct	s_entity
 # define XPM_GROUND  "assets/xpm/Grass-0.xpm"
 # define XPM_WALL  "assets/xpm/Bush.xpm"
 # define XPM_EXIT  "assets/xpm/Chest-open.xpm"
-# define XPM_PLAYER  "assets/xpm/Cat-front.xpm"
+# define XPM_PLAYER  "asset/Cat-front.xpm"
 # define XPM_COLLECTIBLE  "assets/xpm/Milk-full.xpm"
 # define XPM_ADVERSE "assets/xpm/Cow-0.xpm"
 
@@ -94,9 +76,9 @@ typedef struct s_img
 typedef struct	s_map
 {
 	char			**grid;
+	t_point			grid_size;
 	size_t			row_size;
 	size_t			col_size;
-	size_t			grid_size;
 	t_entity		*wall;
 	t_entity		*ground;
 	t_entity		*collectible;
@@ -104,6 +86,7 @@ typedef struct	s_map
 	t_entity		*player;
 	t_entity		*adverse;
 	t_entity		*entities[ENTITIES_TYPE_COUNT + 1];
+	char			valid_entities[ENTITIES_TYPE_COUNT + 1];
 }	t_map;
 
 typedef struct s_game

@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 06:06:02 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/04 16:56:11 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/06 01:08:41 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ int	main(int argc, char *argv[])
 	    put_err("Too many arguments", &solong, MLX_OFF);
 	if (parse_map(argv[1], &solong))
 		put_err("Failled to parse map", &solong, MLX_OFF);
-	printf("Main map grid is: %p\n", solong.map.grid);
 	solong.mlx = mlx_init();
-	printf("Main map grid2 is: %p && mlx ptr is %p\n", solong.map.grid, solong.mlx);
-	//printf("Weird data is %s\n", *(solong.map->grid));
+	printf("Main map grid is: %p\n", solong.map.grid);
 	if (!solong.mlx)
 		put_err("Failed to initialize MLX", &solong, MLX_OFF);
 	// while (*solong.map->grid)
@@ -50,11 +48,8 @@ int	main(int argc, char *argv[])
 	// 	ft_putendl_fd(*(solong.map->grid)++, 1);
 	// }
 	
-	//parse map
 	//draw map
 	//enable actions
-	//mlx_xpm_file_to_image(void *mlx, char *filename, int *width, int *height);
-	//check xpm alloc
 	solong.win = mlx_new_window(solong.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, GAME_NAME);
 	if (!solong.win)
 		return (free(solong.mlx), 1);
