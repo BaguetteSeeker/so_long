@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/04 14:43:37 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/07 23:40:39 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int destroy_mlx(t_game *solong)
 	mlx_destroy_display(solong->mlx);
 	printf("Grid ptr is: %p\n", solong->map.grid);
 	solong->map.grid = ft_clean_memtree(solong->map.grid);
+	//solong->map.grid = ft_clean_memtree(solong->map.grid);
+	solong->map.shallow_grid = ft_clean_memtree(solong->map.shallow_grid);
 	free(solong->mlx);
 	return (0);
 }

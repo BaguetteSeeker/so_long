@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:30:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/06 01:22:39 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/07 18:21:34 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 typedef struct  s_point
 {
-	size_t	x;
-	size_t	y;
+	int	x;
+	int	y;
 }	t_point;
 
 typedef struct	s_entity

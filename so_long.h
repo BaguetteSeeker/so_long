@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/06 02:08:06 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 00:39:36 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "mlx.h"
 
 # define EXIT_SUCCESS 0
-# define EXIT_FAILLURE -1
+# define EXIT_FAILLURE 1
 # define MLX_OFF 0
 # define MLX_ON 1
 
@@ -64,7 +64,7 @@ typedef struct s_rect
 }	t_rect;
 
 
-typedef struct s_img
+typedef struct	s_img
 {
 	void	*mlx_img;
 	char	*addr;
@@ -73,9 +73,18 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_count
+{
+	size_t	collectible;
+	size_t	exit;
+	size_t	player;
+	size_t	adverse;
+}	t_count;
+
 typedef struct	s_map
 {
 	char			**grid;
+	char			**shallow_grid;
 	t_point			grid_size;
 	size_t			row_size;
 	size_t			col_size;
@@ -87,6 +96,9 @@ typedef struct	s_map
 	t_entity		*adverse;
 	t_entity		*entities[ENTITIES_TYPE_COUNT + 1];
 	char			valid_entities[ENTITIES_TYPE_COUNT + 1];
+	void			*images[ENTITIES_TYPE_COUNT + 1];
+	t_count			count;
+	t_point			pchr_pos;
 }	t_map;
 
 typedef struct s_game
@@ -104,4 +116,6 @@ int		render_loop(t_game *solong);
 void	setup_hooks(t_game *solong);
 int		destroy_mlx(t_game *solong);
 char	**clean_grid(char **grid);
+void	put_map(t_map *map, t_game *solong);
+void	init_map_entities(t_map *map, t_entity *entities[], t_game *solong);
 #endif
