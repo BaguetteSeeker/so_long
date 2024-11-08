@@ -6,12 +6,13 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:37:40 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 14:54:01 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 17:50:07 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+//Pixel drawing : if = support for little endian, elsif = support for big endian
 void	img_pix_put(t_img *img, int x, int y, int color)
 {
     char    *pixel_pos;
@@ -21,10 +22,8 @@ void	img_pix_put(t_img *img, int x, int y, int color)
     pixel_pos = img->addr + (y * img->line_len + x * (img->bpp / 8));
     while (i >= 0)
     {
-        /* big endian, MSB is the leftmost bit */
         if (img->endian != 0)
             *pixel_pos++ = (color >> i) & 0xFF;
-        /* little endian, LSB is the leftmost bit */
         else
             *pixel_pos++ = (color >> (img->bpp - 8 - i)) & 0xFF;
         i -= 8;

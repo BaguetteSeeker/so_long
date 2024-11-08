@@ -6,7 +6,7 @@
 #    By: epinaud <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/25 16:30:14 by epinaud           #+#    #+#              #
-#    Updated: 2024/11/08 00:40:22 by epinaud          ###   ########.fr        #
+#    Updated: 2024/11/08 17:15:45 by epinaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ os:
 	@echo $(OS_NAME)
 
 so_long: .obj/so_long.o .obj/map_parsing.o .obj/draw.o .obj/set_hooks.o \
-			.obj/map_rendering.o
+			.obj/map_rendering.o .obj/so_long_utils.o
 
 libft:
 	@git -C libft pull
