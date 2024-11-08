@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 22:26:21 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 23:54:52 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@
 
 static void	move_player(int key_symbol, t_game *solong)
 {
-	static size_t	steps = 0;
-	static size_t	items = 0;
 	t_point			next_pos;
 	t_point			curr_pos;
+	static size_t	steps = 0;
+	static size_t	items = 0;
+	static char		steps_msg[255];
 
 	steps++;
 	ft_printf("You walked : %u tiles\n", steps);
-	mlx_string_put(solong->mlx, solong->win, WINDOW_WIDTH / 3, WINDOW_HEIGHT / 2, 0XB6CAD4, "You walked");
+	ft_bzero(steps_msg, ft_strlen(steps_msg));
+	ft_strlcpy(steps_msg, "You walked", 10);
+	ft_strlcpy(steps_msg + 10, ft_itoa(steps), ft_strlen(ft_itoa(steps)));
+	ft_strlcpy(steps_msg + ft_strlen(ft_itoa(steps)), "steps !", 7);
+	mlx_string_put(solong->mlx, solong->win, WINDOW_WIDTH / 3, WINDOW_HEIGHT / 2, 0XB6CAD4, steps_msg);
 	curr_pos = solong->map.pchr_pos;
 	next_pos = curr_pos;
 	if (key_symbol == XK_Right || key_symbol == XK_d)
