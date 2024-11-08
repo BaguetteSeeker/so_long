@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 18:18:04 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 18:21:08 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	move_player(int key_symbol, t_game *solong)
 	else if (key_symbol == XK_Up || key_symbol == XK_w)
 		next_pos.y -= 1;
 	else if (key_symbol == XK_Down || key_symbol == XK_s)
-		next_pos.x += 1;
+		next_pos.y += 1;
 
 	if (solong->map.grid[next_pos.y][next_pos.x] == '1')
 		return (ft_putendl_fd("You just hit a wall !", 1));
