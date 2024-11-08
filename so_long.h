@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 18:15:42 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 18:58:25 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILLURE 1
-# define MLX_OFF 0
-# define MLX_ON 1
 
 # define GAME_NAME "Milk IT!"
 # define ENTITIES_TYPE_COUNT 6
@@ -113,7 +111,7 @@ typedef struct s_game
 }			t_game;
 
 int		parse_map(char *path, t_game *solong);
-int		put_err(char *msg, t_game *solong, int mlx_instance);
+int		put_err(char *msg, t_game *solong);
 int		render_loop(t_game *solong);
 void	setup_hooks(t_game *solong);
 int		destroy_mlx(t_game *solong);
@@ -121,5 +119,5 @@ char	**clean_grid(char **grid);
 void	put_map(t_map *map, t_game *solong);
 void	init_map_entities(t_map *map, t_entity *entities[], t_game *solong);
 int		in_array(int val, int tab[], size_t siz);
-int		close_game(t_game *solong, int mlx_instance);
+int		close_game(t_game *solong);
 #endif

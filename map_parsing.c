@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:18:11 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 14:29:21 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 18:23:52 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	check_wall(char entity, t_point pos, t_game *solong)
 	if (pos.x == 0 || pos.x == (int)solong->map.row_size - 1
 		|| pos.y == 0 || pos.y == (int)solong->map.col_size - 1)
 		if (entity != '1')
-			put_err("Missing wall on map borders", solong, MLX_OFF);
+			put_err("Missing wall on map borders", solong);
 	if (entity == 'E')
 		solong->map.count.exit++;
 	else if (entity == 'P')
@@ -64,18 +64,18 @@ static void	parse_grid(char **grid, t_game *solong)
 		while (grid[row][col] && grid[row][col] != '\n')
 		{
 			if (!ft_strchr(ALLOWED_ELEMS, grid[row][col]))
-				put_err("Invalid tile / element", solong, MLX_OFF);
+				put_err("Invalid tile / element", solong);
 			check_wall(grid[row][col], (t_point){.x = col, .y = row}, solong);
 			col++;
 		}
 		if (solong->map.row_size != col)
-			put_err("Map : Inconsistent rows size", solong, MLX_OFF);
+			put_err("Map : Inconsistent rows size", solong);
 		solong->map.row_size = col;
 		row++;
 	}
 	if (solong->map.count.player != 1 || solong->map.count.exit != 1
 		|| solong->map.count.collectible < 1)
-		put_err("Invalid entity count", solong, MLX_OFF);
+		put_err("Invalid entity count", solong);
 }
 
 char	**create_grid(char *path, t_map *map, t_game *solong)
@@ -88,7 +88,7 @@ char	**create_grid(char *path, t_map *map, t_game *solong)
 	solong->map.col_size = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		put_err("Error opening file", solong, MLX_OFF);
+		put_err("Error opening file", solong);
 	while (1)
 	{
 		row = get_next_line(fd);
@@ -98,7 +98,7 @@ char	**create_grid(char *path, t_map *map, t_game *solong)
 		{
 			grid = ft_realloc(grid, sizeof(char *) * (map->col_size + 2));
 			if (!grid)
-				put_err("Failed to realloc map grid", solong, MLX_OFF);
+				put_err("Failed to realloc map grid", solong);
 			grid[map->col_size] = row;
 			grid[++(map->col_size)] = NULL;
 		}
@@ -121,7 +121,7 @@ int	parse_map(char *path, t_game *solong)
 			solong->map.pchr_pos);
 	if (solong->map.count.collectible != found_entities.collectible
 		|| found_entities.exit != 1)
-		put_err("Map : Unreachable exit or collectible", solong, MLX_OFF);
+		put_err("Map : Unreachable exit or collectible", solong);
 	printf("%ld collectibles, %ld found\n", solong->map.count.collectible, found_entities.collectible);
 	return (0);
 }

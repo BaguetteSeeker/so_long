@@ -44,7 +44,7 @@
 // 	// 	(*entities)->img = mlx_xpm_file_to_image(solong->mlx, (*entities)->xpm, 
 // 	// 	&((*entities)->imgwdth), &((*entities)->imghght));
 // 	// 	if (!((*entities)->xpm))
-// 	// 		put_err("Failled to generate mlx image from XPM file", solong, MLX_OFF);
+// 	// 		put_err("Failled to generate mlx image from XPM file", solong);
 // 	// 	entities++;
 // 	// }
 // 	// entities -= ENTITIES_TYPE_COUNT;
@@ -63,7 +63,7 @@
 // 	prev_rowsiz = -1;
 // 	fd = open(path, O_RDONLY);
 // 	if (fd == -1)
-// 		put_err("Error opening file", solong, MLX_OFF);
+// 		put_err("Error opening file", solong);
 // 	printf("Creating grid .. File path is %s\n Fd is %d\n", path, fd);
 // 	while (1)
 // 	{
@@ -72,12 +72,12 @@
 // 			return (close(fd), map->grid);
 // 		map->row_size = ft_strlen(row);
 // 		if (prev_rowsiz > -1 && (size_t)prev_rowsiz != map->row_size)
-// 			put_err("Map : Inconsistent rows size", solong, MLX_OFF);
+// 			put_err("Map : Inconsistent rows size", solong);
 // 		else
 // 		{
 // 			map->grid = ft_realloc(map->grid, sizeof(char *) * (map->col_size + 2));
 // 			if (!map->grid)
-// 				put_err("Failed to realloc map grid", solong, MLX_OFF);
+// 				put_err("Failed to realloc map grid", solong);
 // 			map->grid[map->col_size] = row;
 // 			map->grid[++(map->col_size)] = NULL;
 // 			ft_printf("Curr row address %p\n%s", map->grid[map->col_size - 1], map->grid[map->col_size - 1]);
@@ -100,7 +100,7 @@
 // 		while (grid[row][col] && grid[row][col] != '\n')
 // 		{
 // 			if (!ft_strchr(ALLOWED_ELEMS, grid[row][col]))
-// 				put_err("Invalid tile / element", solong, MLX_OFF);
+// 				put_err("Invalid tile / element", solong);
 // 			else
 // 				elem = entities[(size_t)(ft_strchr(solong->map.valid_entities, grid[row][col]) - solong->map.valid_entities[0])];
 // 			if (ft_strchr("PE", grid[row][col]))
@@ -126,7 +126,7 @@
 // 	printf("Map grid is: %p\n", solong->map.grid);
 // 	parse_grid(solong->map.grid, solong->map.entities, solong);
 // 	if (solong->map.player->count != 1 || solong->map.exit->count != 1 || solong->map.collectible->count < 1)
-// 		put_err("Invalid entity count", solong, MLX_OFF);
+// 		put_err("Invalid entity count", solong);
 // 	//flood_fill
 // 	//flood_fill(solong->map.grid, solong->map.grid_size, solong->map.player->pos);
 // 	//check errors

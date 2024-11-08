@@ -1,0 +1,3 @@
+1 - Modify map flood_fill so ennemies are evaluated as untresspassable
+3 - Create a map msg = max it siz 10
+4 - Finish event handling

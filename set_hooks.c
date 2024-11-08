@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 18:21:08 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 18:55:27 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	move_player(int key_symbol, t_game *solong)
 int	on_keypress(int key_symbol, t_game *solong)
 {
 	if (key_symbol == XK_Escape)
-		exit(close_game(solong, MLX_ON));
+		exit(close_game(solong));
 	else if (in_array(key_symbol, MOV_KEYS, sizeof(MOV_KEYS)) != -1)
 		move_player(key_symbol, solong);
 	return (0);
