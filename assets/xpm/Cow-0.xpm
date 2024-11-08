@@ -1,7 +1,7 @@
 /* XPM */
 static char *_409aed928fa49e3833dbc324beda660WS1xc80l3TwaflaU[] = {
 /* columns rows colors chars-per-pixel */
-"27 18 7 1 ",
+"27 28 7 1 ",
 "  c #C0D470",
 ". c #754C60",
 "X c #90625D",
@@ -10,6 +10,16 @@ static char *_409aed928fa49e3833dbc324beda660WS1xc80l3TwaflaU[] = {
 "+ c #E8B5AC",
 "@ c #F3E5C2",
 /* pixels */
+"                           ",
+"                           ",
+"                           ",
+"                           ",
+"                           ",
+"                           ",
+"                           ",
+"                           ",
+"                           ",
+"                           ",
 "             X@X  X@X      ",
 "          XX X@XXXX@X  XX  ",
 "         X@@XXOOOOO@@XX@@XX",
