@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/07 23:40:39 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 01:40:10 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@
 int destroy_mlx(t_game *solong)
 {
     ft_putendl_fd("Entered destruction state;\n", 1);
-	//Clean map entities
-	mlx_clear_window(solong->mlx, solong->win);
-	mlx_destroy_window(solong->mlx, solong->win);
-	mlx_destroy_image(solong->mlx, solong->img.mlx_img);
+	if (solong->win)
+	{
+		mlx_clear_window(solong->mlx, solong->win);
+		mlx_destroy_window(solong->mlx, solong->win);
+	}
+	if (solong->img.mlx_img)
+		mlx_destroy_image(solong->mlx, solong->img.mlx_img);
 	mlx_destroy_display(solong->mlx);
-	printf("Grid ptr is: %p\n", solong->map.grid);
+	//Clean map entities
 	solong->map.grid = ft_clean_memtree(solong->map.grid);
-	//solong->map.grid = ft_clean_memtree(solong->map.grid);
 	solong->map.shallow_grid = ft_clean_memtree(solong->map.shallow_grid);
 	free(solong->mlx);
+	solong->mlx = NULL;
 	return (0);
 }
 

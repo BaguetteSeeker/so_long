@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 00:39:36 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 01:16:49 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define EXIT_OPEN 7
 # define EXIT_SHUT 8
 
-# define XPM_GROUND  "assets/xpm/Grass-0.xpm"
+# define XPM_GROUND  "assets/xpm/Grass-1.xpm"
 # define XPM_WALL  "assets/xpm/Bush.xpm"
 # define XPM_EXIT  "assets/xpm/Chest-open.xpm"
 # define XPM_PLAYER  "asset/Cat-front.xpm"
