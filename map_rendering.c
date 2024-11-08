@@ -6,23 +6,19 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 00:12:21 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 18:26:32 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 23:32:18 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_entity	*fetch_entity(char c, t_game *solong)
-{
-	int	pos;
-
-	pos = 0;
-	while (ALLOWED_ELEMS[pos] && ALLOWED_ELEMS[pos] != c)
-		pos++;
-	if (!ALLOWED_ELEMS[pos])
-		return (NULL);
-	return (solong->map.entities[pos]);
-}
+// static void	render_player_move(t_point new_pos, t_game *solong)
+// {
+// 	mlx_put_image_to_window(solong->mlx, solong->win,
+// 			fetch_entity('0', solong)->img,
+// 			new_pos.x * TILE_SIZE, new_pos.y * TILE_SIZE);
+	
+// }
 
 static void render_initial_map(char **grid, t_game *solong)
 {

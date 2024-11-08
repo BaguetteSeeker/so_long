@@ -6,11 +6,27 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 06:06:02 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 18:58:16 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 23:26:01 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int destroy_mlx(t_game *solong)
+{
+    ft_putendl_fd("Destroying mlx..\n", 1);
+	if (solong->win)
+	{
+		mlx_clear_window(solong->mlx, solong->win);
+		mlx_destroy_window(solong->mlx, solong->win);
+	}
+	if (solong->img.mlx_img)
+		mlx_destroy_image(solong->mlx, solong->img.mlx_img);
+	mlx_destroy_display(solong->mlx);
+	free(solong->mlx);
+	solong->mlx = NULL;
+	return (0);
+}
 
 int	clean_game_memory(t_game *solong)
 {
@@ -41,7 +57,7 @@ int	clean_game_memory(t_game *solong)
 int	close_game(t_game *solong)
 {
 	clean_game_memory(solong);
-	ft_putendl_fd("Conratz, you just wonthe game !", 1);
+
 	ft_putendl_fd("Closing game..\n\n..\n", 1);
 	exit(0);
 }
@@ -59,22 +75,21 @@ int	put_err(char *msg, t_game *solong)
 void	init_map_entities(t_map *map, t_entity *entities[], t_game *solong)
 {	
 	int	i;
-	ft_putendl_fd("Loading entities ..", 1);
-	map->ground = ft_lstnew(&(t_entity){.xpm = XPM_GROUND});
-	map->wall = ft_lstnew(&(t_entity){.xpm = XPM_WALL});
-	map->exit = ft_lstnew(&(t_entity){.xpm = XPM_EXIT});
-	map->player = ft_lstnew(&(t_entity){.xpm = XPM_PLAYER});
-	map->collectible = ft_lstnew(&(t_entity){.xpm = XPM_COLLECTIBLE});
-	map->adverse = ft_lstnew(&(t_entity){.xpm = XPM_ADVERSE});
-	entities[0] = map->ground;
-	entities[1] = map->wall;
-	entities[2] = map->exit;
-	entities[3] = map->player;
-	entities[4] = map->collectible;
-	entities[5] = map->adverse;
-	entities[6] = NULL;
-	ft_strlcpy(map->valid_entities, ALLOWED_ELEMS, ENTITIES_TYPE_COUNT);
+	
 	i = 0;
+	ft_putendl_fd("Loading entities ..", 1);
+	entities[TILE_ID] = ft_lstnew(&(t_entity){.xpm = XPM_GROUND});
+	entities[WALL_ID] = ft_lstnew(&(t_entity){.xpm = XPM_WALL});
+	entities[EXIT_SHUT_ID] = ft_lstnew(&(t_entity){.xpm = XPM_EXIT_CLOSED});
+	entities[EXIT_OPEN_ID] = ft_lstnew(&(t_entity){.xpm = XPM_EXIT_OPEN});
+	entities[CHAR_RGT_ID] = ft_lstnew(&(t_entity){.xpm = XPM_PLAYER_RIGHT});
+	entities[CHAR_LFT_ID] = ft_lstnew(&(t_entity){.xpm = XPM_PLAYER_LEFT});
+	entities[CHAR_BCK_ID] = ft_lstnew(&(t_entity){.xpm = XPM_PLAYER_BACK});
+	entities[CHAR_FRT_ID] = ft_lstnew(&(t_entity){.xpm = XPM_PLAYER_FRONT});
+	entities[CLCTBL_ID] = ft_lstnew(&(t_entity){.xpm = XPM_COLLECTIBLE});
+	entities[ADVERSE_ID] = ft_lstnew(&(t_entity){.xpm = XPM_ADVERSE});
+	entities[10] = NULL;
+	ft_strlcpy(map->valid_entities, ALLOWED_ELEMS, ENTITIES_TYPE_COUNT);
 	while (i < ENTITIES_TYPE_COUNT)
 	{
 		entities[i]->img = mlx_xpm_file_to_image(solong->mlx, entities[i]->xpm, 

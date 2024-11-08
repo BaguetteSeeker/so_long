@@ -6,31 +6,18 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 18:55:27 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 22:26:21 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int destroy_mlx(t_game *solong)
-{
-    ft_putendl_fd("Destroying mlx..\n", 1);
-	if (solong->win)
-	{
-		mlx_clear_window(solong->mlx, solong->win);
-		mlx_destroy_window(solong->mlx, solong->win);
-	}
-	if (solong->img.mlx_img)
-		mlx_destroy_image(solong->mlx, solong->img.mlx_img);
-	mlx_destroy_display(solong->mlx);
-	free(solong->mlx);
-	solong->mlx = NULL;
-	return (0);
-}
+
 
 static void	move_player(int key_symbol, t_game *solong)
 {
 	static size_t	steps = 0;
+	static size_t	items = 0;
 	t_point			next_pos;
 	t_point			curr_pos;
 
@@ -51,18 +38,33 @@ static void	move_player(int key_symbol, t_game *solong)
 	if (solong->map.grid[next_pos.y][next_pos.x] == '1')
 		return (ft_putendl_fd("You just hit a wall !", 1));
 	else if (solong->map.grid[next_pos.y][next_pos.x] == 'A')
+	{
+		ft_putendl_fd("You just hit an ennemy !\n\nGAME OVER", 1);
+		close_game(solong);
 		return (ft_putendl_fd("You just hit an ennemy !", 1));
+	}
 	else if (solong->map.grid[next_pos.y][next_pos.x] == 'C')
+	{
+		items++;
+		//Move char
+		if (items == solong->map.count.collectible)
+			//open portal
 		return (ft_putendl_fd("You got a new collectible !", 1));
+	}
 	else if (solong->map.grid[next_pos.y][next_pos.x] == 'E')
+	{
+		//Move char
+		if (items == solong->map.count.collectible)
+			ft_putendl_fd("Congratz, you just won the game !", 1);
 		return (ft_putendl_fd("You walked over the exit !", 1));
+	}
 	else if (solong->map.grid[next_pos.y][next_pos.x] == '0')
 		return (ft_putendl_fd("You walked over some grass !", 1));
 	else if (solong->map.grid[next_pos.y][next_pos.x] == 'P')
 		return (ft_putendl_fd("You just walked over yourself.. Wait, what !?", 1));
 	//clean curr pos
 	//draw nextpos
-	//update pchar_pos
+	//update pchar_pos	
 }
 
 int	on_keypress(int key_symbol, t_game *solong)

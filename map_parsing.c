@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:18:11 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 18:23:52 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 23:38:35 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_count	flood_fill(char **tab, t_point size, t_point cur)
 	if (cur.y < 0 || cur.y >= size.y
 		|| cur.x < 0 || cur.x >= size.x
 		|| tab[cur.y][cur.x] == 'F'
-		|| tab[cur.y][cur.x] == '1')
+		|| tab[cur.y][cur.x] == '1'
+		|| tab[cur.y][cur.x] == 'A')
 		return ((t_count){});
 	if (tab[cur.y][cur.x] == 'C')
 		count.collectible++;
@@ -109,9 +110,7 @@ int	parse_map(char *path, t_game *solong)
 {
 	t_count	found_entities;
 
-	solong->map = (t_map){.grid = NULL, .row_size = 0, .col_size = 0,
-		.ground = 0, .wall = 0, .player = 0, .exit = 0,
-		.adverse = 0, .collectible = 0};
+	solong->map = (t_map){.grid = NULL, .row_size = 0, .col_size = 0,};
 	solong->map.grid = create_grid(path, &solong->map, solong);
 	solong->map.row_size = ft_strlen(*(solong->map.grid)) - 1;
 	parse_grid(solong->map.grid, solong);
@@ -122,6 +121,7 @@ int	parse_map(char *path, t_game *solong)
 	if (solong->map.count.collectible != found_entities.collectible
 		|| found_entities.exit != 1)
 		put_err("Map : Unreachable exit or collectible", solong);
-	printf("%ld collectibles, %ld found\n", solong->map.count.collectible, found_entities.collectible);
+	printf("%ld collectibles, %ld found\n",
+		solong->map.count.collectible, found_entities.collectible);
 	return (0);
 }

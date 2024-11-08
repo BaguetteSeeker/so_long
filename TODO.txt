@@ -1,3 +1,9 @@
-1 - Modify map flood_fill so ennemies are evaluated as untresspassable
-3 - Create a map msg = max it siz 10
+3 - Create a map msg = max int siz 10
 4 - Finish event handling
+	When hitting a collectible
+	When hitting an ennemy
+	When hitting an exit
+5 - Get rid of the list system. That includes:
+		Rework of the init_map_entities() with an array of void *img corresponding to another array of *char[255]
+		Rework of the clean_game_memory() to work with the malloced void*img array
+		Change element fetching method in places that used the fetch_entity function
