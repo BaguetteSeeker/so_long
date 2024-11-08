@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 01:16:49 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 15:51:44 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,17 @@
 
 # define XPM_GROUND  "assets/xpm/Grass-1.xpm"
 # define XPM_WALL  "assets/xpm/Bush.xpm"
-# define XPM_EXIT  "assets/xpm/Chest-open.xpm"
-# define XPM_PLAYER  "asset/Cat-front.xpm"
+# define XPM_EXIT  "assets/xpm/Chest-closed.xpm"
+# define XPM_PLAYER  "assets/xpm/Cat-front.xpm"
 # define XPM_COLLECTIBLE  "assets/xpm/Milk-full.xpm"
 # define XPM_ADVERSE "assets/xpm/Cow-0.xpm"
 
 # define RED_PIXEL 0xFF00FF
 # define GREEN_PIXEL 0xFF00
 
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 500
+# define WINDOW_WIDTH 1280
+# define WINDOW_HEIGHT 500
+# define TILE_SIZE 32
 
 
 typedef struct s_rect

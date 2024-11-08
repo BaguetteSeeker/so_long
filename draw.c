@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:37:40 by epinaud           #+#    #+#             */
-/*   Updated: 2024/10/31 12:35:27 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 14:54:01 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ int	render_loop(t_game *solong)
 {
 	if (solong->win == NULL)
         return (1);
-	render_background(&solong->img, 0xFFFFFF);
-    render_rect(&solong->img, (t_rect){WINDOW_WIDTH - 100, WINDOW_HEIGHT - 100,
-            100, 100, GREEN_PIXEL});
-    render_rect(&solong->img, (t_rect){0, 0, 100, 100, RED_PIXEL});
-	mlx_put_image_to_window(solong->mlx, solong->win, solong->img.mlx_img, 0, 0);
+	//render_background(&solong->img, 0xFFFFFF);
+    // render_rect(&solong->img, (t_rect){WINDOW_WIDTH - 100, WINDOW_HEIGHT - 100,
+    //          100, 100, GREEN_PIXEL});
+    // render_rect(&solong->img, (t_rect){0, 0, 100, 100, RED_PIXEL});
+	//mlx_put_image_to_window(solong->mlx, solong->win, solong->img.mlx_img, 0, 0);
     return (0);
 }

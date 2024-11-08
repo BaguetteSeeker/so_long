@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 06:06:02 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 12:33:48 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 15:34:04 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	init_map_entities(t_map *map, t_entity *entities[], t_game *solong)
 	entities[5] = map->adverse;
 	entities[6] = NULL;
 	ft_strlcpy(map->valid_entities, ALLOWED_ELEMS, ENTITIES_TYPE_COUNT);
-	printf("Test entities, shud display player xpm path : %s\n", entities[3]->xpm);
+	//printf("Test entities, shud display player xpm path : %s\n", entities[3]->xpm);
 	int	i;
 	i = 0;
 	while (i < ENTITIES_TYPE_COUNT)
@@ -68,11 +68,8 @@ void	init_map_entities(t_map *map, t_entity *entities[], t_game *solong)
 		entities[i]->img = mlx_xpm_file_to_image(solong->mlx, entities[i]->xpm, 
 		&(entities[i]->imgwdth), &(entities[i]->imghght));
 		printf("Its ptr is : %p\n", entities[i]->img);
-		if (!(entities[i]->img))
-		{
+		if (!(entities[i++]->img))
 			put_err("Failled to generate mlx image from XPM file", solong, MLX_ON);
-		}
-		i++;
 	}
 }
 

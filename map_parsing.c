@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:18:11 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 00:10:28 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/08 14:29:21 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_count	flood_fill(char **tab, t_point size, t_point cur)
 		count.collectible++;
 	else if (tab[cur.y][cur.x] == 'E')
 		count.exit++;
-	printf("Flooding %d X and %d Y Elm is %c && %ld clts\n", cur.x, cur.y, tab[cur.y][cur.x], count.collectible);
 	tab[cur.y][cur.x] = 'F';
 	flood_fill(tab, size, (t_point){cur.x - 1, cur.y});
 	flood_fill(tab, size, (t_point){cur.x + 1, cur.y});
