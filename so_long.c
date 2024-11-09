@@ -6,22 +6,22 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 06:06:02 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 23:26:01 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/09 03:48:05 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int destroy_mlx(t_game *solong)
+int	destroy_mlx(t_game *solong)
 {
-    ft_putendl_fd("Destroying mlx..\n", 1);
+	ft_putendl_fd("Destroying mlx..\n", 1);
 	if (solong->win)
 	{
 		mlx_clear_window(solong->mlx, solong->win);
 		mlx_destroy_window(solong->mlx, solong->win);
 	}
-	if (solong->img.mlx_img)
-		mlx_destroy_image(solong->mlx, solong->img.mlx_img);
+	if (solong->shape.img)
+		mlx_destroy_image(solong->mlx, solong->shape.img);
 	mlx_destroy_display(solong->mlx);
 	free(solong->mlx);
 	solong->mlx = NULL;
@@ -57,7 +57,6 @@ int	clean_game_memory(t_game *solong)
 int	close_game(t_game *solong)
 {
 	clean_game_memory(solong);
-
 	ft_putendl_fd("Closing game..\n\n..\n", 1);
 	exit(0);
 }
@@ -73,9 +72,9 @@ int	put_err(char *msg, t_game *solong)
 }
 
 void	init_map_entities(t_map *map, t_entity *entities[], t_game *solong)
-{	
+{
 	int	i;
-	
+
 	i = 0;
 	ft_putendl_fd("Loading entities ..", 1);
 	entities[TILE_ID] = ft_lstnew(&(t_entity){.xpm = XPM_GROUND});
@@ -92,8 +91,8 @@ void	init_map_entities(t_map *map, t_entity *entities[], t_game *solong)
 	ft_strlcpy(map->valid_entities, ALLOWED_ELEMS, ENTITIES_TYPE_COUNT);
 	while (i < ENTITIES_TYPE_COUNT)
 	{
-		entities[i]->img = mlx_xpm_file_to_image(solong->mlx, entities[i]->xpm, 
-		&(entities[i]->imgwdth), &(entities[i]->imghght));
+		entities[i]->img = mlx_xpm_file_to_image(solong->mlx, entities[i]->xpm,
+				&(entities[i]->imgwdth), &(entities[i]->imghght));
 		if (!(entities[i++]->img))
 			put_err("Failled to generate mlx image from XPM file", solong);
 	}
@@ -105,9 +104,9 @@ int	main(int argc, char *argv[])
 
 	solong.mlx_state = 0;
 	if (argc < 2)
-	   	put_err("Missing map (./maps/<map>.ber)", &solong);
+		put_err("Missing map (./maps/<map>.ber)", &solong);
 	if (argc > 2)
-	    put_err("Too many arguments", &solong);
+		put_err("Too many arguments", &solong);
 	if (parse_map(argv[1], &solong))
 		put_err("Failled to parse map", &solong);
 	put_map(&solong.map, &solong);

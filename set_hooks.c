@@ -6,13 +6,28 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 23:54:52 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/09 03:35:34 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	render_steps_count(size_t steps, t_game *solong)
+{
+	static char	steps_msg[255];
+	char		*stred_steps;
+	t_point		pos;
 
+	pos = (t_point){solong->map.row_size * (TILE_SIZE - 3) / 2, (solong->map.col_size + 1) * (TILE_SIZE - 2)};
+	stred_steps = ft_itoa(steps);
+	ft_bzero(steps_msg, 255);
+	ft_strlcpy(steps_msg, "You walked ", 12);
+	ft_strlcpy(&steps_msg[11], stred_steps, ft_strlen(stred_steps) + 1);
+	ft_strlcat(&steps_msg[ft_strlen(steps_msg)], " tiles !", 7);
+	mlx_put_image_to_window(solong->mlx, solong->win, solong->shape.img, 0, TILE_SIZE * solong->map.col_size);
+	mlx_string_put(solong->mlx, solong->win, pos.x, pos.y, 0XFFFFFF, steps_msg);
+	free(stred_steps);
+}
 
 static void	move_player(int key_symbol, t_game *solong)
 {
@@ -20,16 +35,11 @@ static void	move_player(int key_symbol, t_game *solong)
 	t_point			curr_pos;
 	static size_t	steps = 0;
 	static size_t	items = 0;
-	static char		steps_msg[255];
 
 	steps++;
+	render_steps_count(steps, solong);
 	ft_printf("You walked : %u tiles\n", steps);
-	ft_bzero(steps_msg, ft_strlen(steps_msg));
-	ft_strlcpy(steps_msg, "You walked", 10);
-	ft_strlcpy(steps_msg + 10, ft_itoa(steps), ft_strlen(ft_itoa(steps)));
-	ft_strlcpy(steps_msg + ft_strlen(ft_itoa(steps)), "steps !", 7);
-	mlx_string_put(solong->mlx, solong->win, WINDOW_WIDTH / 3, WINDOW_HEIGHT / 2, 0XB6CAD4, steps_msg);
-	curr_pos = solong->map.pchr_pos;
+		curr_pos = solong->map.pchr_pos;
 	next_pos = curr_pos;
 	if (key_symbol == XK_Right || key_symbol == XK_d)
 		next_pos.x += 1;
