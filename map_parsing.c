@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:18:11 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 23:38:35 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 01:12:12 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**create_grid(char *path, t_map *map, t_game *solong)
 	solong->map.col_size = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		put_err("Error opening file", solong);
+		put_err(ERR_F_PATH_PERMS, solong);
 	while (1)
 	{
 		row = get_next_line(fd);
@@ -99,7 +99,7 @@ char	**create_grid(char *path, t_map *map, t_game *solong)
 		{
 			grid = ft_realloc(grid, sizeof(char *) * (map->col_size + 2));
 			if (!grid)
-				put_err("Failed to realloc map grid", solong);
+				put_err("Failled to realloc map grid", solong);
 			grid[map->col_size] = row;
 			grid[++(map->col_size)] = NULL;
 		}

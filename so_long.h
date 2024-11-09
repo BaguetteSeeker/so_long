@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/09 03:35:10 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 01:12:06 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@
 
 # define TILE_SIZE 32
 # define MOV_KEYS  (int[8]){XK_Right, XK_d, XK_Left, XK_a, XK_Up, XK_w, XK_Down, XK_s}
+
+# define ERR_F_PATH_PERMS "Wrong path or insufficient permissions"
 
 typedef struct s_rect
 {
