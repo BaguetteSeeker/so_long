@@ -1,9 +1,10 @@
 3 - Create a map msg = max int siz 10
 4 - Finish event handling
 	When hitting a collectible
-	When hitting an ennemy
+	When hitting an ennemsshy
 	When hitting an exit
 5 - Get rid of the list system. That includes:
 		Rework of the init_map_entities() with an array of void *img corresponding to another array of *char[255]
 		Rework of the clean_game_memory() to work with the malloced void*img array
 		Change element fetching method in places that used the fetch_entity function
+6 - Added a check within parsing to deny oversized maps
