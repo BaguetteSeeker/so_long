@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:30:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/08 23:11:17 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 18:31:31 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ typedef struct	s_entity
 	void			*img;
 	int				imgwdth;
 	int				imghght;
-	size_t			count;
-	t_point			pos;
 	struct s_entity	*next;
 }	t_entity;
 

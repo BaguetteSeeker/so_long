@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 06:06:02 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/10 01:13:19 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 19:21:52 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ int	clean_game_memory(t_game *solong)
 	int	i;
 
 	i = 0;
-	while (i < ENTITIES_TYPE_COUNT + 1)
+	while (i < ENTITIES_TCOUNT + 1)
 	{
 		if (solong->map.entities[i])
 		{
 			if (solong->map.entities[i]->img)
 			{
 				mlx_destroy_image(solong->mlx, solong->map.entities[i]->img);
-				ft_printf("Removing entity : %s\n", solong->map.entities[i]->xpm);
+				ft_printf("Removing entity : %s\n",
+				solong->map.entities[i]->xpm);
 			}
 			free(solong->map.entities[i]);
 			solong->map.entities[i] = NULL;
@@ -54,8 +55,9 @@ int	clean_game_memory(t_game *solong)
 	return (0);
 }
 
-int	close_game(t_game *solong)
+int	close_game(char *closure_msg, t_game *solong)
 {
+	ft_putendl_fd(closure_msg, 1);
 	clean_game_memory(solong);
 	ft_putendl_fd("Closing game..\n\n..\n", 1);
 	exit(0);
@@ -74,23 +76,37 @@ int	put_err(char *msg, t_game *solong)
 
 void	init_map_entities(t_map *map, t_entity *entities[], t_game *solong)
 {
+	char **xpm_lst = XPM_LST;
 	int	i;
 
 	i = 0;
+	while (xpm_lst[i])
+	{
+		ft_putendl_fd(xpm_lst[i], 1);
+		i++;
+	}
+	i = 0;
 	ft_putendl_fd("Loading entities ..", 1);
-	entities[TILE_ID] = ft_lstnew(&(t_entity){.xpm = XPM_GROUND});
-	entities[WALL_ID] = ft_lstnew(&(t_entity){.xpm = XPM_WALL});
-	entities[EXIT_SHUT_ID] = ft_lstnew(&(t_entity){.xpm = XPM_EXIT_CLOSED});
-	entities[EXIT_OPEN_ID] = ft_lstnew(&(t_entity){.xpm = XPM_EXIT_OPEN});
-	entities[CHAR_RGT_ID] = ft_lstnew(&(t_entity){.xpm = XPM_PLAYER_RIGHT});
-	entities[CHAR_LFT_ID] = ft_lstnew(&(t_entity){.xpm = XPM_PLAYER_LEFT});
-	entities[CHAR_BCK_ID] = ft_lstnew(&(t_entity){.xpm = XPM_PLAYER_BACK});
-	entities[CHAR_FRT_ID] = ft_lstnew(&(t_entity){.xpm = XPM_PLAYER_FRONT});
-	entities[CLCTBL_ID] = ft_lstnew(&(t_entity){.xpm = XPM_COLLECTIBLE});
-	entities[ADVERSE_ID] = ft_lstnew(&(t_entity){.xpm = XPM_ADVERSE});
+	// int	entity_id;
+	// while (i < ENTITIES_TCOUNT)
+	// {
+	// 	entity_id = ENTITIES_ID[i++];
+	// 	entities[entity_id] = ft_lstnew(&(t_entity){xpm_lst[entity_id], NULL, 0, 0, 0, (t_point){}, NULL});
+	// }
+	 entities[TILE_ID] = ft_lstnew(&(t_entity){XPM_GROUND, NULL, 0, 0, NULL});
+	entities[WALL_ID] = ft_lstnew(&(t_entity){XPM_WALL, NULL, 0, 0, NULL});
+	entities[EXIT_SHUT_ID] = ft_lstnew(&(t_entity){XPM_EXIT_SHUT, NULL, 0, 0, NULL});
+	entities[EXIT_OPEN_ID] = ft_lstnew(&(t_entity){XPM_EXIT_OPEN, NULL, 0, 0, NULL});
+	entities[CHAR_RGT_ID] = ft_lstnew(&(t_entity){XPM_PLAYER_RIGHT, NULL, 0, 0, NULL});
+	entities[CHAR_LFT_ID] = ft_lstnew(&(t_entity){XPM_PLAYER_LEFT, NULL, 0, 0, NULL});
+	entities[CHAR_BCK_ID] = ft_lstnew(&(t_entity){XPM_PLAYER_BACK, NULL, 0, 0, NULL});
+	entities[CHAR_FRT_ID] = ft_lstnew(&(t_entity){XPM_PLAYER_FRONT, NULL, 0, 0, NULL});
+	entities[CLCTBL_ID] = ft_lstnew(&(t_entity){XPM_COLLECTIBLE, NULL, 0, 0, NULL});
+	entities[ADVERSE_ID] = ft_lstnew(&(t_entity){XPM_ADVERSE, NULL, 0, 0, NULL});
 	entities[10] = NULL;
-	ft_strlcpy(map->valid_entities, ALLOWED_ELEMS, ENTITIES_TYPE_COUNT);
-	while (i < ENTITIES_TYPE_COUNT)
+	ft_strlcpy(map->valid_entities, ALLOWED_ELEMS, ENTITIES_TCOUNT);
+	i = 0;
+	while (i < ENTITIES_TCOUNT)
 	{
 		entities[i]->img = mlx_xpm_file_to_image(solong->mlx, entities[i]->xpm,
 				&(entities[i]->imgwdth), &(entities[i]->imghght));

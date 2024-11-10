@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/10 17:02:09 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 19:20:00 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define EXIT_FAILLURE 1
 
 # define GAME_NAME "Milk IT!"
-# define ENTITIES_TYPE_COUNT 9 + 1
+# define ENTITIES_TCOUNT 10
 # define ALLOWED_ELEMS "01PECA"
 
 # define TILE_ID 0
@@ -41,7 +41,7 @@
 
 # define XPM_GROUND  "assets/xpm/Grass-1.xpm"
 # define XPM_WALL  "assets/xpm/Bush.xpm"
-# define XPM_EXIT_CLOSED  "assets/xpm/Chest-closed.xpm"
+# define XPM_EXIT_SHUT  "assets/xpm/Chest-closed.xpm"
 # define XPM_EXIT_OPEN  "assets/xpm/Chest-closed.xpm"
 # define XPM_PLAYER_FRONT  "assets/xpm/Cat-front.xpm"
 # define XPM_PLAYER_BACK  "assets/xpm/Cat-back.xpm"
@@ -50,6 +50,12 @@
 # define XPM_COLLECTIBLE  "assets/xpm/Milk-full.xpm"
 # define XPM_ADVERSE "assets/xpm/Cow-0.xpm"
 
+# define ENTITIES_ID (int[ENTITIES_TCOUNT]){TILE_ID, WALL_ID, EXIT_SHUT_ID, \
+			EXIT_OPEN_ID, CHAR_RGT_ID, CHAR_LFT_ID, CHAR_BCK_ID, CHAR_FRT_ID, \
+			CLCTBL_ID, ADVERSE_ID}
+# define XPM_LST (char*[255]){XPM_GROUND, XPM_WALL, XPM_EXIT_SHUT, \
+			XPM_EXIT_OPEN, XPM_PLAYER_RIGHT, XPM_PLAYER_LEFT, XPM_PLAYER_BACK, \
+			XPM_PLAYER_FRONT, XPM_COLLECTIBLE, XPM_ADVERSE}
 // # define RED_PIXEL 0xFF00FF
 // # define GREEN_PIXEL 0xFF00
 # define COUNTER_BGCLR 0XFFFFFF
@@ -98,9 +104,9 @@ typedef struct	s_map
 	t_point			grid_size;
 	size_t			row_size;
 	size_t			col_size;
-	t_entity		*entities[ENTITIES_TYPE_COUNT + 1];
-	char			valid_entities[ENTITIES_TYPE_COUNT + 1];
-	void			*images[ENTITIES_TYPE_COUNT + 1];
+	t_entity		*entities[ENTITIES_TCOUNT + 1];
+	void			*images[ENTITIES_TCOUNT + 1];
+	char			valid_entities[ENTITIES_TCOUNT + 1];
 	t_count			count;
 	t_point			pchr_pos;
 	t_point			exit_pos;

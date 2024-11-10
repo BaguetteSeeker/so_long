@@ -6,110 +6,93 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/10 01:52:06 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 05:42:16 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	render_steps_count(size_t steps, t_game *solong)
+void	render_move(t_point cur, t_point nxt, char *track_path, t_game *solong)
 {
-	static char	steps_msg[255];
-	char		*stred_steps;
-	t_point		pos;
+	(void)track_path;
+	render_tile(nxt, solong);
+	render_tile(cur, solong);
+	//render player
+	// mlx_put_image_to_window(solong->mlx, solong->win, 
+	// 	solong->map.entities[fetch_entity(track_path[NXT_POS])]->img, nxt.x * TILE_SIZE, nxt.y * TILE_SIZE);
 
-	pos = (t_point){solong->map.row_size * (TILE_SIZE - 3) / 2,
-	(solong->map.col_size + 1) * (TILE_SIZE - 2)};
-			stred_steps = ft_itoa(steps);
-	ft_bzero(steps_msg, 255);
-	ft_strlcpy(steps_msg, "You walked ", 12);
-	ft_strlcpy(&steps_msg[11], stred_steps, ft_strlen(stred_steps) + 1);
-	ft_strlcat(&steps_msg[ft_strlen(steps_msg)], " tiles !", 9);
-	mlx_put_image_to_window(solong->mlx, solong->win, solong->shape.img, 0,
-			TILE_SIZE * solong->map.col_size);
-	mlx_string_put(solong->mlx, solong->win, pos.x, pos.y, 0XFFFFFF, steps_msg);
-	free(stred_steps);
+	render_exit(EXIT_SHUT_ID, solong);
+	//player_getrot
+	render_entity(CHAR_FRT_ID, nxt, solong);
+// 	if (track_path[NXT_POS] == '0')
+// 		return (ft_putendl_fd("You walked over some grass !", 1));
 }
 
-void	update_tile(t_point next_pos, t_entity *entities[], t_game *solong, size_t *items)
+static t_point	set_player_angle(int keysym, t_point nxt_pos, size_t *cardinal)
 {
-	mlx_put_image_to_window(solong->mlx, solong->win, entities[TILE_ID]->img, next_pos.x * TILE_SIZE, next_pos.y * TILE_SIZE);
-
-	if (solong->map.grid[next_pos.y][next_pos.x] == '1')
-		return (ft_putendl_fd("You just hit a wall !", 1));
-	else if (solong->map.grid[next_pos.y][next_pos.x] == 'A')
+	if (keysym == XK_Right || keysym == XK_d)
 	{
-		ft_putendl_fd("You just hit an ennemy !\n\nGAME OVER", 1);
-		close_game(solong);
-		return (ft_putendl_fd("You just hit an ennemy !", 1));
+		*cardinal = CHAR_RGT_ID;
+		nxt_pos.x += 1;
 	}
-	else if (solong->map.grid[next_pos.y][next_pos.x] == 'C')
+	else if (keysym == XK_Left || keysym == XK_a)
 	{
-		*items++;
-		//Move char
-		if (*items == solong->map.count.collectible)
-			//open portal
-		return (ft_putendl_fd("You got a new collectible !", 1));
+		*cardinal = CHAR_LFT_ID;
+		nxt_pos.x -= 1;
 	}
-	else if (solong->map.grid[next_pos.y][next_pos.x] == 'E')
+	else if (keysym == XK_Up || keysym == XK_w)
 	{
-		//Move char
-		if (*items == solong->map.count.collectible)
-			ft_putendl_fd("Congratz, you just won the game !", 1);
-		return (ft_putendl_fd("You walked over the exit !", 1));
+		*cardinal = CHAR_BCK_ID;
+		nxt_pos.y -= 1;
 	}
-	else if (solong->map.grid[next_pos.y][next_pos.x] == '0')
-		return (ft_putendl_fd("You walked over some grass !", 1));
-	else if (solong->map.grid[next_pos.y][next_pos.x] == 'P')
-		return (ft_putendl_fd("You just walked over yourself.. Wait, what !?", 1));	
+	else if (keysym == XK_Down || keysym == XK_s)
+	{
+		*cardinal = CHAR_FRT_ID;
+		nxt_pos.y += 1;
+	}
+	return (nxt_pos);
 }
 
-static void	move_player(int key_symbol, t_game *solong)
+static void	keymove_handler(int key_symbol, t_point *cur_pos, t_game *solong)
 {
 	t_point			next_pos;
-	t_point			curr_pos;
 	static size_t	steps = 0;
 	static size_t	items = 0;
 	size_t			pchar_cardinal;
+	static char		track_path[3] = "   ";
 
-	steps++;
-	render_steps_count(steps, solong);
+	track_path[CUR_POS] = solong->map.grid[cur_pos->y][cur_pos->x];
+	next_pos = set_player_angle(key_symbol, *cur_pos, &pchar_cardinal);
+	track_path[NXT_POS] = solong->map.grid[next_pos.y][next_pos.x];
+
+	if (track_path[NXT_POS] == '1')
+		return (ft_putendl_fd("You just hit a wall !", 1));
+	render_steps_count(++steps, solong);
 	ft_printf("You walked : %u tiles\n", steps);
-		curr_pos = solong->map.pchr_pos;
-	next_pos = curr_pos;
-	if (key_symbol == XK_Right || key_symbol == XK_d)
+	render_move(*cur_pos, next_pos, track_path, solong);
+	if (track_path[NXT_POS] == 'A')
+		close_game("You just hit an ennemy !\n\nGAME OVER", solong);
+	else if (track_path[NXT_POS] == 'C')
 	{
-		pchar_cardinal = CHAR_RGT_ID;
-		next_pos.x += 1;
+		if (++items == solong->map.count.collectible)
+		{
+			ft_putendl_fd("Got all collectible bud, run to the EXIT!", 1);
+			render_exit(EXIT_OPEN_ID, solong);
+		}
 	}
-	else if (key_symbol == XK_Left || key_symbol == XK_a)
-	{
-		pchar_cardinal = CHAR_LFT_ID;
-		next_pos.x -= 1;
-	}
-	else if (key_symbol == XK_Up || key_symbol == XK_w)
-	{
-		pchar_cardinal = CHAR_BCK_ID;
-		next_pos.y -= 1;
-	}
-	else if (key_symbol == XK_Down || key_symbol == XK_s)
-		pchar_cardinal = CHAR_FRT_ID;
-		next_pos.y += 1;
-
-	if (ft_strchr("0CE", solong->map.grid[next_pos.y][next_pos.x]))
-		update_tile(next_pos, solong->map.entities, solong, items);
-	//clean curr pos
-	//draw nextpos
+	else if (track_path[NXT_POS] == 'E' && items == solong->map.count.collectible)
+		close_game("Congratz, you just won the game !", solong);	
 	//update pchar_pos on map
-	//if full col -> Game win
+	track_path[PRV_POS] = solong->map.grid[cur_pos->y][cur_pos->x];
+	*cur_pos = next_pos;
 }
 
 int	on_keypress(int key_symbol, t_game *solong)
 {
 	if (key_symbol == XK_Escape)
-		exit(close_game(solong));
+		exit(close_game("", solong));
 	else if (in_array(key_symbol, MOV_KEYS, sizeof(MOV_KEYS)) != -1)
-		move_player(key_symbol, solong);
+		keymove_handler(key_symbol, &(solong->map.pchr_pos), solong);
 	return (0);
 }
 

@@ -36,7 +36,7 @@
 // 	entities[4] = map->collectible;
 // 	entities[5] = map->adverse;
 // 	entities[6] = NULL;
-// 	ft_strlcpy(map->valid_entities, ALLOWED_ELEMS, ENTITIES_TYPE_COUNT);
+// 	ft_strlcpy(map->valid_entities, ALLOWED_ELEMS, ENTITIES_TCOUNT);
 // 	printf("Test entities, shud display player xpm path : %s\n", entities[3]->xpm);
 // 	// while (*entities)
 // 	// {
@@ -47,7 +47,7 @@
 // 	// 		put_err("Failled to generate mlx image from XPM file", solong);
 // 	// 	entities++;
 // 	// }
-// 	// entities -= ENTITIES_TYPE_COUNT;
+// 	// entities -= ENTITIES_TCOUNT;
 // }
 
 // //Parse grid

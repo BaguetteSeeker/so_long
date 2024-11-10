@@ -1,4 +1,3 @@
-3 - Create a map msg = max int siz 10
 4 - Finish event handling
 	When hitting a collectible
 	When hitting an ennemsshy
@@ -8,3 +7,5 @@
 		Rework of the clean_game_memory() to work with the malloced void*img array
 		Change element fetching method in places that used the fetch_entity function
 6 - Added a check within parsing to deny oversized maps
+7 - Ensure i get no rendering issue on windows reduce
+8 - Correct cross close issue
