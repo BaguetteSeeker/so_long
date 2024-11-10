@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:18:11 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/10 01:12:12 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 04:05:26 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ static void	check_wall(char entity, t_point pos, t_game *solong)
 		if (entity != '1')
 			put_err("Missing wall on map borders", solong);
 	if (entity == 'E')
+	{
+		solong->map.exit_pos = (t_point){.x = pos.x, .y = pos.y};
 		solong->map.count.exit++;
+	}
 	else if (entity == 'P')
 	{
 		solong->map.pchr_pos = (t_point){.x = pos.x, .y = pos.y};
