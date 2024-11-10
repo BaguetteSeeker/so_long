@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/10 04:35:29 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 17:02:09 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define EXIT_FAILLURE 1
 
 # define GAME_NAME "Milk IT!"
-# define ENTITIES_TYPE_COUNT 9
+# define ENTITIES_TYPE_COUNT 9 + 1
 # define ALLOWED_ELEMS "01PECA"
 
 # define TILE_ID 0
@@ -52,10 +52,12 @@
 
 // # define RED_PIXEL 0xFF00FF
 // # define GREEN_PIXEL 0xFF00
-# define RECT1_COLR 0XFFFFFF
+# define COUNTER_BGCLR 0XFFFFFF
 
+# define WIN_OFFST_INCOL 1
+# define WIN_OFFST_INRW 2
 # define TILE_SIZE 32
-# define COUNTER_SIZEINROW 1
+# define CNTR_SIZ_INRW 1
 # define MOV_KEYS  (int[8]){XK_Right, XK_d, XK_Left, XK_a, XK_Up, XK_w, XK_Down, XK_s}
 # define PRV_POS 0
 # define CUR_POS 1
@@ -124,5 +126,8 @@ int			in_array(int val, int tab[], size_t siz);
 char		**clean_grid(char **grid);
 int			render_loop(t_game *solong);
 int			render_rect(t_img *img, t_rect rect);
+void		render_tile(t_point cur, t_game *solong);
 void		render_exit(size_t items_got, t_game *solong);
+void		render_entity(int entity_id, t_point cur, t_game *solong);
+void		render_steps_count(size_t steps, t_game *solong);
 #endif

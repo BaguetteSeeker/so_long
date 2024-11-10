@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:18:11 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/10 04:39:51 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 17:00:16 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ int	parse_map(char *path, t_game *solong)
 	if (solong->map.count.collectible != found_entities.collectible
 		|| found_entities.exit != 1)
 		put_err("Map : Unreachable exit or collectible", solong);
-	else if (solong->map.row_size * TILE_SIZE > 1920 ||
-		(solong->map.col_size +  COUNTER_SIZEINROW) * TILE_SIZE > 1080)
+	else if ((solong->map.row_size + WIN_OFFST_INCOL) * TILE_SIZE > 1920 ||
+		(solong->map.col_size +  CNTR_SIZ_INRW + WIN_OFFST_INRW) * TILE_SIZE > 1080)
 		put_err("Map : Oversized dimensions", solong);
 	printf("%ld collectibles, %ld found\n",
 		solong->map.count.collectible, found_entities.collectible);
