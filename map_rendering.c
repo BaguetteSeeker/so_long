@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 00:12:21 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/10 17:02:54 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 18:41:56 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	render_steps_count(size_t steps, t_game *solong)
 	t_point		pos;
 
 	pos = (t_point){solong->map.row_size * (TILE_SIZE - 3) / 2,
-	(solong->map.col_size  * (TILE_SIZE + CNTR_SIZ_INRW)) + (TILE_SIZE / 4)};
+	(solong->map.col_size  * TILE_SIZE) + (TILE_SIZE / 2)};
 	stred_steps = ft_itoa(steps);
 	ft_bzero(steps_msg, 255);
 	ft_strlcpy(steps_msg, "You walked ", 12);
