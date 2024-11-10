@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/10 04:06:12 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/10 04:35:29 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define RECT1_COLR 0XFFFFFF
 
 # define TILE_SIZE 32
+# define COUNTER_SIZEINROW 1
 # define MOV_KEYS  (int[8]){XK_Right, XK_d, XK_Left, XK_a, XK_Up, XK_w, XK_Down, XK_s}
 # define PRV_POS 0
 # define CUR_POS 1
@@ -116,11 +117,12 @@ int			put_err(char *msg, t_game *solong);
 int			close_game(char *closure_msg, t_game *solong);
 int			parse_map(char *path, t_game *solong);
 void		put_map(t_map *map, t_game *solong);
-int			render_loop(t_game *solong);
 void		setup_hooks(t_game *solong);
-int			render_rect(t_img *img, t_rect rect);
 void		init_map_entities(t_map *map, t_entity *entities[], t_game *solong);
 t_entity	*fetch_entity(char c, t_game *solong);
 int			in_array(int val, int tab[], size_t siz);
 char		**clean_grid(char **grid);
+int			render_loop(t_game *solong);
+int			render_rect(t_img *img, t_rect rect);
+void		render_exit(size_t items_got, t_game *solong);
 #endif
