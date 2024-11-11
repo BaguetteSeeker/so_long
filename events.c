@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 07:34:49 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 07:37:25 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	cross_close(t_game *solong)
 //mlx_loop_hook(solong->mlx, &render_loop, solong);
 void	setup_hooks(t_game *solong)
 {
-	ft_putendl_fd("Setting up hooks\n", 1);
 	mlx_hook(solong->win, KeyRelease, KeyReleaseMask, &on_keypress, solong);
 	mlx_hook(solong->win, DestroyNotify, StructureNotifyMask,
 		&cross_close, solong);
