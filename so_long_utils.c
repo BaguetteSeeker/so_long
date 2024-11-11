@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 01:38:00 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 04:16:35 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 06:03:38 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	destroy_mlx(t_game *solong)
 {
-	ft_putendl_fd("Destroying mlx..\n", 1);
 	if (solong->win)
 	{
 		mlx_clear_window(solong->mlx, solong->win);
@@ -65,10 +64,10 @@ t_entity	*fetch_entity(char c, t_game *solong)
 
 int	in_array(int val, int tab[], size_t siz)
 {
-	size_t	pos;
+	int	pos;
 
 	pos = 0;
-	while (pos != siz)
+	while ((size_t)pos != siz)
 	{
 		if (tab[pos] == val)
 			return (pos);

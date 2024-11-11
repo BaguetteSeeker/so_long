@@ -6,20 +6,11 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 03:37:01 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 03:57:21 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 06:05:08 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-// static void	put_exit(size_t exit_stance, t_game *solong)
-// {
-// 	render_tile(TILE_ID, solong->map.exit_pos, solong);
-// 	if (!exit_stance)
-// 		render_tile(EXIT_SHUT_ID, solong->map.exit_pos, solong);
-// 	else
-// 		render_tile(EXIT_OPEN_ID, solong->map.exit_pos, solong);
-// }
 
 static void	render_player(t_point pos, size_t cardinal, t_game *solong)
 {
@@ -89,16 +80,14 @@ void	move_player(int keysym, t_point *curpos, t_game *solong)
 
 	nxt_pos = set_player_angle(keysym, *curpos, &orientation);
 	nxt_entt = solong->map.grid[nxt_pos.y][nxt_pos.x];
-	// if (curpos->y != solong->map.exit_pos.y || curpos->x != solong->map.exit_pos.x)
-	// 	render_player(*curpos, orientation, solong);
-	// else
 	render_player(*curpos, orientation, solong);
 	if (nxt_entt == '1')
 		return (ft_putendl_fd("You just hit a wall !", 1));
 	render_steps_count(++steps, solong);
 	ft_printf("You walked : %u tiles\n", steps);
-		render_tile(TILE_ID, *curpos, solong);
-	if (curpos->y != solong->map.exit_pos.y || curpos->x != solong->map.exit_pos.x)
+	render_tile(TILE_ID, *curpos, solong);
+	if (curpos->y != solong->map.exit_pos.y
+		|| curpos->x != solong->map.exit_pos.x)
 		solong->map.grid[curpos->y][curpos->x] = '0';
 	if (nxt_entt != 'E')
 		solong->map.grid[nxt_pos.y][nxt_pos.x] = 'P';
