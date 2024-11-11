@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:37:40 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 04:04:38 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 06:15:05 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ void	render_background(t_img *img, int width, int height, int color)
 		++i;
 	}
 }
-

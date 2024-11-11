@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 04:15:25 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 06:02:24 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,17 +121,17 @@ typedef struct s_game
 	size_t	mlx_state;
 }			t_game;
 
-int			put_err(char *msg, t_game *solong);
-int			close_game(char *closure_msg, t_game *solong);
-int			clean_game_memory(t_game *solong);
 int			parse_map(char *path, t_game *solong);
 void		put_map(t_map *map, t_game *solong);
 void		setup_hooks(t_game *solong);
 void		load_xpms(t_entity *entities[], t_game *solong);
-t_entity	*fetch_entity(char c, t_game *solong);
-int			in_array(int val, int tab[], size_t siz);
 int			render_rect(t_img *img, t_rect rect);
 void		render_tile(size_t xpm_id, t_point pos, t_game *solong);
 void		render_steps_count(size_t steps, t_game *solong);
 void		move_player(int keysym, t_point *curpos, t_game *solong);
+int			put_err(char *msg, t_game *solong);
+int			close_game(char *closure_msg, t_game *solong);
+int			clean_game_memory(t_game *solong);
+t_entity	*fetch_entity(char c, t_game *solong);
+int			in_array(int val, int tab[], size_t siz);
 #endif

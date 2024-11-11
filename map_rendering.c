@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 00:12:21 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 03:34:15 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 06:10:35 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	render_steps_count(size_t steps, t_game *solong)
 	t_point		pos;
 
 	pos = (t_point){solong->map.row_size * (TILE_SIZE - 3) / 2,
-	(solong->map.col_size  * TILE_SIZE) + (TILE_SIZE / 2)};
+		(solong->map.col_size * TILE_SIZE) + (TILE_SIZE / 2)};
 	stred_steps = ft_itoa(steps);
 	ft_bzero(steps_msg, 255);
 	ft_strlcpy(steps_msg, "You walked ", 12);
 	ft_strlcpy(&steps_msg[11], stred_steps, ft_strlen(stred_steps) + 1);
 	ft_strlcat(&steps_msg[ft_strlen(steps_msg)], " tiles !", 9);
 	mlx_put_image_to_window(solong->mlx, solong->win, solong->shape.img, 0,
-			TILE_SIZE * solong->map.col_size);
+		TILE_SIZE * solong->map.col_size);
 	mlx_string_put(solong->mlx, solong->win, pos.x, pos.y, 0XFFFFFF, steps_msg);
 	free(stred_steps);
 }

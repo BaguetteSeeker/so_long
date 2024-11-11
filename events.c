@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 04:09:50 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 05:47:32 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	on_keypress(int keysym, t_game *solong)
 {
 	if (keysym == XK_Escape)
 		exit(close_game("", solong));
-	else if (in_array(keysym, MOV_KEYS, sizeof(MOV_KEYS)) != -1)
+	else if (in_array(keysym, MOV_KEYS, sizeof(MOV_KEYS) / 4) != -1)
 		move_player(keysym, &(solong->map.pchr_pos), solong);
 	return (0);
 }
