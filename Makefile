@@ -6,7 +6,7 @@
 #    By: epinaud <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/25 16:30:14 by epinaud           #+#    #+#              #
-#    Updated: 2024/11/11 04:02:40 by epinaud          ###   ########.fr        #
+#    Updated: 2024/11/11 08:13:35 by epinaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OS_NAME := $(shell uname -s | tr A-Z a-z)
 $(OBJ_DIR)/%.o : %.c
 	$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
-all: libft $(OBJ_DIR) $(EXE)
+all: ftbranch libft $(OBJ_DIR) $(EXE)
 
 $(EXE) :
 	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
@@ -41,16 +41,17 @@ so_long: .obj/so_long.o .obj/map_parsing.o .obj/draw.o .obj/events.o \
 			.obj/map_rendering.o .obj/so_long_utils.o .obj/player_movement.o
 
 libft:
-	@git -C libft pull
 	@make -C libft
 	@make -C $(MLX_DIR)
 
 relibft:
-	@git -C libft pull
 	@make re -C libft
 
 .obj:
-	mkdir -p .obj
+	@mkdir -p .obj
+
+ftbranch:
+	@git -C libft checkout main
 
 clean:
 	@rm -f $(EXE)
@@ -60,6 +61,6 @@ fclean:  clean
 	@rm -rf $(OBJ_DIR)
 	@make fclean -C libft
 
-re: fclean relibft $(OBJ_DIR) $(EXE)
+re: ftbranch fclean relibft $(OBJ_DIR) $(EXE)
 
 .PHONY:  all clean fclean re bonus libft relibft
