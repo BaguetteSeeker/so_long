@@ -6,40 +6,43 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 00:12:21 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/10 18:41:56 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 03:34:15 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	render_tile(t_point cur, t_game *solong)
+void	load_xpms(t_entity *entities[], t_game *solong)
 {
-	mlx_put_image_to_window(solong->mlx, solong->win,
-		solong->map.entities[TILE_ID]->img,
-		cur.x * TILE_SIZE,
-		cur.y * TILE_SIZE);
+	t_entity	new_entity;
+	char		**xpm_lst;
+	int			entt_id;
+	int			i;
+
+	xpm_lst = XPM_LST;
+	i = 0;
+	while (i < ENTITIES_TCOUNT)
+	{
+		entt_id = ENTITIES_ID[i++];
+		new_entity = (t_entity){.img = NULL, .imghght = 0, .imgwdth = 0};
+		ft_strlcpy(new_entity.xpm, xpm_lst[entt_id],
+			ft_strlen(xpm_lst[entt_id]) + 1);
+		entities[entt_id] = ft_lstnew(&new_entity);
+		entities[entt_id]->img = mlx_xpm_file_to_image(solong->mlx,
+				entities[entt_id]->xpm, &(entities[entt_id]->imgwdth),
+				&(entities[entt_id]->imghght));
+		if (!(entities[entt_id]->img))
+			put_err("Failled to generate mlx image from XPM file", solong);
+	}
+	entities[10] = NULL;
 }
 
-void	render_entity(int entity_id, t_point cur, t_game *solong)
+void	render_tile(size_t xpm_id, t_point pos, t_game *solong)
 {
 	mlx_put_image_to_window(solong->mlx, solong->win,
-		solong->map.entities[entity_id]->img,
-		cur.x * TILE_SIZE,
-		cur.y * TILE_SIZE);
-}
-
-void	render_exit(size_t exit_status, t_game *solong)
-{
-	size_t	exit_id;
-	
-	if (EXIT_OPEN_ID == exit_status)
-		exit_id = EXIT_OPEN_ID;
-	else
-		exit_id = EXIT_SHUT_ID;
-	mlx_put_image_to_window(solong->mlx, solong->win, 
-		solong->map.entities[exit_id]->img, 
-		solong->map.exit_pos.x * TILE_SIZE,
-		solong->map.exit_pos.y  * TILE_SIZE);
+		solong->map.entities[xpm_id]->img,
+		pos.x * TILE_SIZE,
+		pos.y * TILE_SIZE);
 }
 
 void	render_steps_count(size_t steps, t_game *solong)
@@ -101,6 +104,6 @@ void	put_map(t_map *map, t_game *solong)
 		0, 0, COUNTER_BGCLR});
 	solong->shape.addr = mlx_get_data_addr(solong->shape.img,
 			&solong->shape.bpp, &solong->shape.line_len, &solong->shape.endian);
-	init_map_entities(map, solong->map.entities, solong);
+	load_xpms(solong->map.entities, solong);
 	render_initial_map(solong->map.grid, solong);
 }
