@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 00:12:21 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 06:10:35 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 07:25:02 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	load_xpms(t_entity *entities[], t_game *solong)
 
 	xpm_lst = XPM_LST;
 	i = 0;
-	while (i < ENTITIES_TCOUNT)
+	while (i < ENTT_TCOUNT)
 	{
 		entt_id = ENTITIES_ID[i++];
 		new_entity = (t_entity){.img = NULL, .imghght = 0, .imgwdth = 0};

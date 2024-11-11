@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 01:38:00 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 06:03:38 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 07:25:02 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	clean_game_memory(t_game *solong)
 	int	i;
 
 	i = 0;
-	while (i < ENTITIES_TCOUNT + 1)
+	while (i < ENTT_TCOUNT + 1)
 	{
 		if (solong->map.entities[i])
 		{

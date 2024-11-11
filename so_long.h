@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 06:02:24 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 07:28:07 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,13 @@
 # define EXIT_FAILLURE 1
 
 # define GAME_NAME "Milk IT!"
-# define ENTITIES_TCOUNT 10
+# define ENTT_TCOUNT 10
 # define ALLOWED_ELEMS "01PECA"
+# define COUNTER_BGCLR 0XFFFFFF
+# define TILE_SIZE 32
+# define WIN_OFFST_INCOL 1
+# define WIN_OFFST_INRW 2
+# define CNTR_SIZ_INRW 1
 
 # define TILE_ID 0
 # define WALL_ID 1
@@ -50,25 +55,15 @@
 # define XPM_COLLECTIBLE  "assets/xpm/Milk-full.xpm"
 # define XPM_ADVERSE "assets/xpm/Cow-0.xpm"
 
-# define ENTITIES_ID (int[ENTITIES_TCOUNT]){TILE_ID, WALL_ID, CHAR_FRT_ID, \
-			EXIT_SHUT_ID, CLCTBL_ID, ADVERSE_ID, EXIT_OPEN_ID, \
-			CHAR_RGT_ID, CHAR_LFT_ID, CHAR_BCK_ID }
-# define XPM_LST (char*[255]){XPM_GROUND, XPM_WALL, XPM_PLAYER_FRONT, \
-			XPM_EXIT_SHUT, XPM_COLLECTIBLE, XPM_ADVERSE, XPM_EXIT_OPEN, \
-			XPM_PLAYER_RIGHT, XPM_PLAYER_LEFT, XPM_PLAYER_BACK }
-// # define RED_PIXEL 0xFF00FF
-// # define GREEN_PIXEL 0xFF00
-# define COUNTER_BGCLR 0XFFFFFF
+# define ST_XPMS XPM_GROUND, XPM_WALL, XPM_PLAYER_FRONT, XPM_EXIT_SHUT
+# define ND_XPMS XPM_COLLECTIBLE, XPM_ADVERSE, XPM_EXIT_OPEN
+# define RD_XPMS XPM_PLAYER_RIGHT, XPM_PLAYER_LEFT, XPM_PLAYER_BACK
+# define ST_IDS TILE_ID, WALL_ID, CHAR_FRT_ID, EXIT_SHUT_ID, CLCTBL_ID
+# define ND_IDS ADVERSE_ID, EXIT_OPEN_ID, CHAR_RGT_ID, CHAR_LFT_ID, CHAR_BCK_ID
+# define ENTITIES_ID (int[ENTT_TCOUNT]){ST_IDS, ND_IDS}
+# define XPM_LST (char*[255]){ST_XPMS, ND_XPMS, RD_XPMS}
 
-# define WIN_OFFST_INCOL 1
-# define WIN_OFFST_INRW 2
-# define TILE_SIZE 32
-# define CNTR_SIZ_INRW 1
-# define MOV_KEYS (int[8]){XK_Right, XK_Left, XK_Up, XK_Down, \
-			XK_d, XK_a, XK_w, XK_s}
-# define PRV_POS 0
-# define CUR_POS 1
-# define NXT_POS 2
+# define MOV_KEYS (int[8]){XK_Right,XK_Left,XK_Up,XK_Down,XK_d,XK_a,XK_w,XK_s}
 
 # define ERR_F_PATH_PERMS "Wrong path or insufficient permissions"
 
@@ -105,8 +100,8 @@ typedef struct s_map
 	t_point			grid_size;
 	size_t			row_size;
 	size_t			col_size;
-	t_entity		*entities[ENTITIES_TCOUNT + 1];
-	void			*images[ENTITIES_TCOUNT + 1];
+	t_entity		*entities[ENTT_TCOUNT + 1];
+	void			*images[ENTT_TCOUNT + 1];
 	t_count			count;
 	t_point			pchr_pos;
 	t_point			exit_pos;
