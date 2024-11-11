@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:37:40 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/09 03:44:39 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 03:58:34 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,4 @@ void	render_background(t_img *img, int width, int height, int color)
 			img_pix_put(img, j++, i, color);
 		++i;
 	}
-}
-
-//render_background(&solong->img, 0xFFFFFF);
-// render_rect(&solong->img, (t_rect){WINDOW_WIDTH - 100, WINDOW_HEIGHT - 100,
-//		  100, 100, GREEN_PIXEL});
-// render_rect(&solong->img, (t_rect){0, 0, 100, 100, RED_PIXEL});
-int	render_loop(t_game *solong)
-{
-	if (solong->win == NULL)
-		return (1);
-	return (0);
 }
