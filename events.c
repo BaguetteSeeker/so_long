@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 22:45:08 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 05:47:32 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/11 07:34:49 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	put_err(char *msg, t_game *solong)
 {
-	ft_putendl_fd("Error\n", 1);
+	ft_putendl_fd("Error", 1);
 	if (errno)
 		perror(msg);
 	else
