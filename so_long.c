@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 06:06:02 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 07:14:03 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/12 19:25:29 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int	main(int argc, char *argv[])
 		put_err("Missing map (./maps/<map>.ber)", &solong);
 	else if (argc > 2)
 		put_err("Too many arguments", &solong);
-	if (!ft_strnstr(&(argv[1][ft_strlen(argv[1])]) - 4, ".ber", 4))
+	printf("File name char size is %lu\n", ft_strlen(argv[1]));
+	if (ft_strlen(argv[1]) < MIN_MAP_NMSIZ
+		|| !ft_strnstr(&(argv[1][ft_strlen(argv[1])]) - 4, ".ber", 4))
 		put_err("Wrong or missing file extension (.ber)", &solong);
 	if (parse_map(argv[1], &solong))
 		put_err("Failled to parse map", &solong);

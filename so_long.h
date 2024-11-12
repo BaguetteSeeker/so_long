@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 05:47:59 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 07:28:07 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/12 19:25:13 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define EXIT_FAILLURE 1
 
 # define GAME_NAME "Milk IT!"
+# define MIN_MAP_NMSIZ 10
 # define ENTT_TCOUNT 10
 # define ALLOWED_ELEMS "01PECA"
 # define COUNTER_BGCLR 0XFFFFFF
