@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:18:11 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/11 00:27:54 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/12 06:07:40 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,15 @@ char	**create_grid(char *path, t_map *map, t_game *solong)
 	while (1)
 	{
 		row = get_next_line(fd);
-		if (!row)
+		if (!row && !grid)
+			put_err("Map file seems to be empty", solong);
+		else if (!row && grid)
 			return (close(fd), grid);
-		else
-		{
-			grid = ft_realloc(grid, sizeof(char *) * (map->col_size + 2));
-			if (!grid)
-				put_err("Failled to realloc map grid", solong);
-			grid[map->col_size] = row;
-			grid[++(map->col_size)] = NULL;
-		}
+		grid = ft_realloc(grid, sizeof(char *) * (map->col_size + 2));
+		if (!grid)
+			(close(fd), put_err("Failled to realloc map grid", solong));
+		grid[map->col_size] = row;
+		grid[++(map->col_size)] = NULL;
 	}
 }
 
@@ -128,7 +127,7 @@ int	parse_map(char *path, t_game *solong)
 		|| (solong->map.col_size + CNTR_SIZ_INRW + WIN_OFFST_INRW)
 		* TILE_SIZE > 1080)
 		put_err("Map : Oversized dimensions", solong);
-	printf("%ld collectibles, %ld found\n",
+	ft_printf("%u collectibles, %u found\n",
 		solong->map.count.collectible, found_entities.collectible);
 	return (0);
 }
