@@ -6,7 +6,7 @@
 /*   By: epinaud <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:18:11 by epinaud           #+#    #+#             */
-/*   Updated: 2024/11/12 06:07:40 by epinaud          ###   ########.fr       */
+/*   Updated: 2024/11/12 19:08:15 by epinaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	parse_map(char *path, t_game *solong)
 		|| (solong->map.col_size + CNTR_SIZ_INRW + WIN_OFFST_INRW)
 		* TILE_SIZE > 1080)
 		put_err("Map : Oversized dimensions", solong);
-	ft_printf("%u collectibles, %u found\n",
+	ft_printf(".ber map file has %u collectibles, %u reachable\n",
 		solong->map.count.collectible, found_entities.collectible);
 	return (0);
 }
